@@ -201,8 +201,8 @@ final class Storipress {
 			'author_id'   => $post->post_author,
 			'title'       => $post->post_title, // do not use get_the_title
 			'slug'        => $post->post_name,
-			'excerpt'     => apply_filters( 'get_the_excerpt', $post->post_excerpt ),
-			'content'     => apply_filters( 'the_content', $post->post_content ),
+			'excerpt'     => $post->post_excerpt,
+			'content'     => wpautop($post->post_content),
 			'status'      => get_post_status( $post ),
 			'commentable' => $post->comment_status,
 			'password'    => $post->post_password ?: null,
