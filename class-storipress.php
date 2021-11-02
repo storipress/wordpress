@@ -162,12 +162,28 @@ final class Storipress {
 	 *
 	 * Because there may be thousands of posts, call get_posts may run out of memory.
 	 *
-	 * @return string[]
+	 * @return Generator
 	 */
-	protected function get_post_ids(): array {
+	protected function get_post_ids(): Generator {
 		global $wpdb;
 
-		return $wpdb->get_col( "SELECT ID FROM $wpdb->posts ORDER BY ID ASC" );
+		$result = $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} ORDER BY ID DESC LIMIT 0, 1" );
+
+		$max_id = (int) $result[0] ?? 0;
+
+		$step = 100;
+
+		for ($i = 1; $i <= $max_id; $i += $step) {
+			$lower_bound = $i;
+
+			$upper_bound = $i + $step;
+
+			$post_ids = $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} WHERE ID >= {$lower_bound} AND ID < {$upper_bound} ORDER BY ID ASC" );
+
+			foreach ( $post_ids as $post_id ) {
+				yield $post_id;
+			}
+		}
 	}
 
 	/**
