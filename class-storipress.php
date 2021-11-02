@@ -104,7 +104,7 @@ final class Storipress {
 
 		header( 'Content-Type: application/jsonlines+json; charset=utf-8' );
 
-		header( 'Content-Disposition: attachment; filename="storipress' . $filename . '"' );
+		header( 'Content-Disposition: attachment; filename="' . $filename . '"' );
 
 		$this->export_site_config()->export_posts();
 	}
