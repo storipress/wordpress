@@ -106,7 +106,9 @@ final class Storipress {
 
 		header( 'Content-Disposition: attachment; filename="' . $filename . '"' );
 
-		$this->export_site_config()->export_posts();
+		$this->export_site_config();
+
+		$this->export_posts();
 	}
 
 	/**
