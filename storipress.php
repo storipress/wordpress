@@ -1,20 +1,24 @@
 <?php
 /**
- * WordPress to Storipress exporter
+ * Storipress Exporter
  *
- * @package   Storipress
- * @author    Kevin(kevin@storipress.com)
- * @license   proprietary
- * @link      https://storipress.com
- * @copyright 2021 Albion Media Pty. Ltd.
+ * @package           Storipress Exporter
+ * @author            Storipress
+ * @copyright         2021 Albion Media Pty. Ltd.
+ * @license           GPL-3.0-or-later
  *
- * @storipress
- * Plugin Name: Storipress
- * Plugin URI:  https://storipress.com
- * Description: Plugin to export your WordPress blog so you can import it into your Storipress publication
- * Version:     1.0.0
- * Author:      Kevin(kevin@storipress.com)
- * License:     proprietary
+ * @wordpress-plugin
+ * Plugin Name:       Storipress Exporter
+ * Plugin URI:        https://storipress.com
+ * Description:       Migrate your WordPress to Storipress just by one-click.
+ * Version:           1.0.0
+ * Requires at least: 5.0
+ * Requires PHP:      7.3
+ * Author:            Storipress
+ * Author URI:        https://storipress.com
+ * Text Domain:       storipress
+ * License:           GPL v3 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  */
 
 // Abort if calling this file directly.

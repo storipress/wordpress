@@ -1,19 +1,18 @@
 <?php
 /**
- * WordPress to Storipress exporter
+ * Storipress Exporter
  *
- * @package   Storipress
- * @author    Kevin(kevin@storipress.com)
- * @license   proprietary
- * @link      https://storipress.com
- * @copyright 2021 Albion Media Pty. Ltd.
+ * @package           Storipress Exporter
+ * @author            Storipress
+ * @copyright         2021 Albion Media Pty. Ltd.
+ * @license           GPL-3.0-or-later
  */
 
 /**
  * Plugin class.
  *
- * @package Storipress
- * @author  Kevin(kevin@storipress.com)
+ * @package Storipress Exporter
+ * @author  Storipress
  */
 final class Storipress {
 	/**
