@@ -26,8 +26,8 @@ if ( ! defined( 'WPINC' ) ) {
 	die();
 }
 
-if ( version_compare( PHP_VERSION, '7.0.0', '<' ) ) {
-	wp_die( 'Storipress Export requires PHP 7.0 or later.' );
+if ( version_compare( PHP_VERSION, '7.3.0', '<' ) ) {
+	wp_die( 'Storipress Export requires PHP 7.3 or later.' );
 }
 
 require_once __DIR__ . '/class-storipress.php';
