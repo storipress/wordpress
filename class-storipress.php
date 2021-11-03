@@ -67,7 +67,14 @@ final class Storipress {
 			return;
 		}
 
-		if ( ! isset( $_GET['type'] ) || 'storipress' !== $_GET['type'] ) {
+		if (
+			! isset( $_GET['type'], $_GET['sp_nonce'] )
+			|| ! wp_verify_nonce( sanitize_key( $_GET['sp_nonce'] ), 'storipress' )
+		) {
+			return;
+		}
+
+		if ( 'storipress' !== $_GET['type'] ) {
 			return;
 		}
 
@@ -86,7 +93,14 @@ final class Storipress {
 	 * @return void
 	 */
 	public function register_menu() {
-		add_management_page( 'Export to Storipress', 'Export to Storipress', 'manage_options', 'export.php?type=storipress' );
+		$nonce = wp_create_nonce( 'storipress' );
+
+		add_management_page(
+			'Export to Storipress',
+			'Export to Storipress',
+			'manage_options',
+			sprintf( 'export.php?type=storipress&sp_nonce=%s', $nonce )
+		);
 	}
 
 	/**
@@ -99,7 +113,7 @@ final class Storipress {
 
 		ob_clean();
 
-		$filename = sprintf( 'storipress-export-%s.ndjson', date( 'Y-m-d-H-i-s' ) );
+		$filename = sprintf( 'storipress-export-%s.ndjson', gmdate( 'Y-m-d-H-i-s' ) );
 
 		header( 'Content-Type: application/jsonlines+json; charset=utf-8' );
 
@@ -139,8 +153,6 @@ final class Storipress {
 	 * @return self
 	 */
 	protected function export_posts(): Storipress {
-		global $post;
-
 		foreach ( $this->get_post_ids() as $post_id ) {
 			$post = get_post( $post_id );
 
@@ -168,18 +180,24 @@ final class Storipress {
 	protected function get_post_ids(): Generator {
 		global $wpdb;
 
-		$result = $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} ORDER BY ID DESC LIMIT 0, 1" );
+		$result = $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} ORDER BY ID DESC LIMIT 0, 1" ); /* db call ok; no-cache ok */
 
 		$max_id = (int) $result[0] ?? 0;
 
 		$step = 100;
 
-		for ($i = 1; $i <= $max_id; $i += $step) {
+		for ( $i = 1; $i <= $max_id; $i += $step ) {
 			$lower_bound = $i;
 
 			$upper_bound = $i + $step;
 
-			$post_ids = $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} WHERE ID >= {$lower_bound} AND ID < {$upper_bound} ORDER BY ID ASC" );
+			$post_ids = $wpdb->get_col(
+				$wpdb->prepare(
+					"SELECT ID FROM {$wpdb->posts} WHERE ID >= %d AND ID < %d ORDER BY ID ASC",
+					$lower_bound,
+					$upper_bound
+				)
+			); /* db call ok; no-cache ok */
 
 			foreach ( $post_ids as $post_id ) {
 				yield $post_id;
@@ -190,7 +208,7 @@ final class Storipress {
 	/**
 	 * Get post data for export.
 	 *
-	 * @param WP_Post $post
+	 * @param WP_Post $post WP_Post object.
 	 *
 	 * @return mixed[]
 	 */
@@ -200,14 +218,14 @@ final class Storipress {
 			'post_id'     => empty( $post->post_parent ) ? null : (string) $post->post_parent,
 			'type'        => $post->post_type,
 			'author_id'   => $post->post_author,
-			'title'       => $post->post_title, // do not use get_the_title
+			'title'       => $post->post_title, /* do not use get_the_title */
 			'slug'        => $post->post_name,
 			'excerpt'     => $post->post_excerpt,
-			'content'     => wpautop($post->post_content),
+			'content'     => wpautop( $post->post_content ),
 			'status'      => get_post_status( $post ),
 			'commentable' => $post->comment_status,
-			'password'    => $post->post_password ?: null,
-			'mime_type'   => get_post_mime_type( $post ) ?: null,
+			'password'    => empty( $post->post_password ) ? null : $post->post_password,
+			'mime_type'   => empty( $post->post_mime_type ) ? null : $post->post_mime_type,
 			'created_at'  => get_the_date( 'U', $post ),
 			'updated_at'  => get_the_modified_date( 'U', $post ),
 			'permalink'   => str_replace( home_url(), '', get_permalink( $post ) ),
@@ -218,7 +236,7 @@ final class Storipress {
 	/**
 	 * Get post taxonomies for export.
 	 *
-	 * @param WP_Post $post
+	 * @param WP_Post $post WP_Post object.
 	 *
 	 * @return mixed[]
 	 */
@@ -229,28 +247,37 @@ final class Storipress {
 			)
 		);
 
-		return array_map( function ( $taxonomy ) use ( $post ) {
-			switch ( $taxonomy ) {
-				case 'category':
-				case 'post_tag':
-					$terms = get_the_terms( $post, $taxonomy );
+		return array_map(
+			function ( $taxonomy ) use ( $post ) {
+				switch ( $taxonomy ) {
+					case 'category':
+					case 'post_tag':
+						$terms = get_the_terms( $post, $taxonomy );
 
-					return $terms === false ? null : wp_list_pluck( $terms, 'name' );
+						return false === $terms ? null : wp_list_pluck( $terms, 'name' );
 
-				case 'post_format':
-					return get_post_format( $post ) ?: null;
+					case 'post_format':
+						$format = get_post_format( $post );
 
-				default:
-					return $taxonomy;
-			}
-		}, $taxonomies );
+						if ( false === $format ) {
+							return null;
+						}
+
+						return $format;
+
+					default:
+						return $taxonomy;
+				}
+			},
+			$taxonomies
+		);
 	}
 
 	/**
 	 * Immediately  flush the buffer.
 	 *
-	 * @param string  $type
-	 * @param mixed[] $data
+	 * @param string  $type The type of the data, e.g. post, attachment.
+	 * @param mixed[] $data The data.
 	 *
 	 * @return void
 	 */
@@ -260,7 +287,7 @@ final class Storipress {
 			'data' => $data,
 		);
 
-		echo json_encode( $payload ) . PHP_EOL;
+		echo wp_json_encode( $payload ) . PHP_EOL;
 
 		ob_flush();
 
