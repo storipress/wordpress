@@ -222,7 +222,7 @@ final class Storipress {
 			'author_id'   => $post->post_author,
 			'title'       => $post->post_title, /* do not use get_the_title */
 			'slug'        => $post->post_name,
-			'excerpt'     => $post->post_excerpt,
+			'excerpt'     => empty( $post->post_excerpt ) ? null : $post->post_excerpt,
 			'content'     => wpautop( $post->post_content ),
 			'status'      => get_post_status( $post ),
 			'commentable' => $post->comment_status,
