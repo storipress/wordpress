@@ -136,7 +136,9 @@ final class Storipress {
 			'url',
 		);
 
-		$data = array();
+		$data = array(
+			'uploads_url' => wp_get_upload_dir()['baseurl'],
+		);
 
 		foreach ( $fields as $field ) {
 			$data[ $field ] = get_bloginfo( $field );
