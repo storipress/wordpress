@@ -16,18 +16,9 @@
  */
 final class Storipress {
 	/**
-	 * Plugin version, used for cache-busting of style and script file references.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @var string
-	 */
-	protected $version = '1.0.0';
-
-	/**
 	 * Instance of this class.
 	 *
-	 * @since 1.0.0
+	 * @since 0.0.1
 	 *
 	 * @var Storipress
 	 */
