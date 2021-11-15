@@ -1,15 +1,15 @@
 <?php
 /**
- * Storipress Exporter
+ * WordPress to Storipress Exporter
  *
- * @package           Storipress Exporter
+ * @package           Storipress
  * @author            Storipress
  * @copyright         2021 Albion Media Pty. Ltd.
  * @license           GPL-3.0-or-later
  *
  * @wordpress-plugin
- * Plugin Name:       Storipress Exporter
- * Plugin URI:        https://storipress.com
+ * Plugin Name:       Storipress
+ * Plugin URI:        https://github.com/storipress/wp-storipress-exporter
  * Description:       Migrate your WordPress to Storipress just by one-click.
  * Version:           1.0.0
  * Requires at least: 5.0
