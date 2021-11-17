@@ -23,7 +23,7 @@ The Storipress Migrator plugin will export as much blog and publication data as 
 - Exporting meta is only supported for users using Yoast (for now). If you use another SEO plugin, please create an issue in our Github repo, or modify the plugin and create a pull request!
 
 ##Bug reports
-Bug reports for the Storipress Migrator plugin are welcome over on our (GitHub repository)[https://github.com/storipress/wp-storipress-exporter].
+Bug reports for the Storipress Migrator plugin are welcome over on our [GitHub repository](https://github.com/storipress/wp-storipress-exporter).
 
 == Installation ==
 1. Use the Add New Plugin in the WordPress admin area
