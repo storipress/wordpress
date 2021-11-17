@@ -32,6 +32,9 @@ Bug reports for the Storipress Migrator plugin are welcome over on our [GitHub r
 
 == Changelog ==
 
+= 0.0.2 =
+* Support exports users, tags and categories
+
 = 0.0.1 =
 * Initial release
 

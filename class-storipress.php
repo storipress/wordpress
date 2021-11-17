@@ -16,6 +16,15 @@
  */
 final class Storipress {
 	/**
+	 * Plugin version.
+	 *
+	 * @since 0.0.2
+	 *
+	 * @var string
+	 */
+	protected $version = '0.0.2';
+
+	/**
 	 * Instance of this class.
 	 *
 	 * @since 0.0.1
@@ -104,13 +113,19 @@ final class Storipress {
 
 		ob_clean();
 
-		$filename = sprintf( 'storipress-export-%s.ndjson', gmdate( 'Y-m-d-H-i-s' ) );
+		$filename = sprintf( 'storipress-exports-%d-%03d.ndjson', time(), wp_rand( 0, 999 ) );
 
 		header( 'Content-Type: application/jsonlines+json; charset=utf-8' );
 
 		header( 'Content-Disposition: attachment; filename="' . $filename . '"' );
 
 		$this->export_site_config();
+
+		$this->export_users();
+
+		$this->export_categories();
+
+		$this->export_tags();
 
 		$this->export_posts();
 	}
@@ -135,7 +150,80 @@ final class Storipress {
 			$data[ $field ] = get_bloginfo( $field );
 		}
 
-		$this->flush( 'site', $data );
+		$this->flush( 'site', $data, false );
+
+		return $this;
+	}
+
+	/**
+	 * Export users.
+	 *
+	 * @return self
+	 */
+	protected function export_users(): Storipress {
+		/**
+		 * Array of WP_User object.
+		 *
+		 * @var WP_User[] $users
+		 */
+
+		$users = get_users(
+			array(
+				'fields' => 'all_with_meta',
+			)
+		);
+
+		foreach ( $users as $user ) {
+			$this->flush(
+				'user',
+				array_diff_key(
+					$user->to_array(),
+					array_flip( array( 'user_pass' ) )
+				)
+			);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Export categories.
+	 *
+	 * @return self
+	 */
+	protected function export_categories(): Storipress {
+		$categories = get_terms(
+			array(
+				'taxonomy'   => 'category',
+				'orderby'    => 'term_id',
+				'hide_empty' => false,
+			)
+		);
+
+		foreach ( $categories as $category ) {
+			$this->flush( 'category', $category->to_array() );
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Export tags.
+	 *
+	 * @return self
+	 */
+	protected function export_tags(): Storipress {
+		$tags = get_tags(
+			array(
+				'taxonomy'   => 'post_tag',
+				'orderby'    => 'id',
+				'hide_empty' => false,
+			)
+		);
+
+		foreach ( $tags as $tag ) {
+			$this->flush( 'tag', $tag->to_array() );
+		}
 
 		return $this;
 	}
@@ -247,7 +335,7 @@ final class Storipress {
 					case 'post_tag':
 						$terms = get_the_terms( $post, $taxonomy );
 
-						return false === $terms ? null : wp_list_pluck( $terms, 'name' );
+						return false === $terms ? null : wp_list_pluck( $terms, 'term_id' );
 
 					case 'post_format':
 						$format = get_post_format( $post );
@@ -267,20 +355,26 @@ final class Storipress {
 	}
 
 	/**
-	 * Immediately  flush the buffer.
+	 * Immediately flush the buffer.
 	 *
 	 * @param string  $type The type of the data, e.g. post, attachment.
 	 * @param mixed[] $data The data.
+	 * @param bool    $prepend_newline Insert new line symbol before each line.
 	 *
 	 * @return void
 	 */
-	protected function flush( string $type, array $data ) {
+	protected function flush( string $type, array $data, bool $prepend_newline = true ) {
 		$payload = array(
-			'type' => $type,
-			'data' => $data,
+			'version' => $this->version,
+			'type'    => $type,
+			'data'    => $data,
 		);
 
-		echo wp_json_encode( $payload ) . PHP_EOL;
+		if ( $prepend_newline ) {
+			echo PHP_EOL;
+		}
+
+		echo wp_json_encode( $payload );
 
 		ob_flush();
 

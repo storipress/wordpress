@@ -11,7 +11,7 @@
  * Plugin Name:       Storipress
  * Plugin URI:        https://github.com/storipress/wp-storipress-exporter
  * Description:       Export your WordPress data to Storipress by one-click.
- * Version:           0.0.1
+ * Version:           0.0.2
  * Requires at least: 5.0
  * Requires PHP:      7.3
  * Author:            Storipress
