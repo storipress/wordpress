@@ -150,7 +150,7 @@ final class Storipress {
 			$data[ $field ] = get_bloginfo( $field );
 		}
 
-		$this->flush( 'site', $data );
+		$this->flush( 'site', $data, false );
 
 		return $this;
 	}
@@ -359,17 +359,22 @@ final class Storipress {
 	 *
 	 * @param string  $type The type of the data, e.g. post, attachment.
 	 * @param mixed[] $data The data.
+	 * @param bool    $prepend_newline Insert new line symbol before each line.
 	 *
 	 * @return void
 	 */
-	protected function flush( string $type, array $data ) {
+	protected function flush( string $type, array $data, bool $prepend_newline = true ) {
 		$payload = array(
 			'version' => $this->version,
 			'type'    => $type,
 			'data'    => $data,
 		);
 
-		echo wp_json_encode( $payload ) . PHP_EOL;
+		if ( $prepend_newline ) {
+			echo PHP_EOL;
+		}
+
+		echo wp_json_encode( $payload );
 
 		ob_flush();
 
