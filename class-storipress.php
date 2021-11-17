@@ -113,7 +113,7 @@ final class Storipress {
 
 		ob_clean();
 
-		$filename = sprintf( 'storipress-export-%s.ndjson', gmdate( 'Y-m-d-H-i-s' ) );
+		$filename = sprintf( 'storipress-exports-%d-%03d.ndjson', time(), wp_rand( 0, 999 ) );
 
 		header( 'Content-Type: application/jsonlines+json; charset=utf-8' );
 
