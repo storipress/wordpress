@@ -269,6 +269,12 @@ final class Storipress {
 
 		$max_id = (int) $result[0] ?? 0;
 
+		$estimate_time = intval( ceil( $max_id / 400 ) );
+
+		set_time_limit(
+			min( max( $estimate_time, 30 ), 900 )
+		);
+
 		$step = 100;
 
 		for ( $i = 1; $i <= $max_id; $i += $step ) {
