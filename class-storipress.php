@@ -113,7 +113,7 @@ final class Storipress {
 
 		$filename = sprintf( 'storipress-exports-%d-%03d.ndjson', time(), wp_rand( 0, 999 ) );
 
-		header('Content-Encoding: identity');
+		header( 'Content-Encoding: identity' );
 
 		header( 'Content-Type: application/jsonlines+json; charset=utf-8' );
 
