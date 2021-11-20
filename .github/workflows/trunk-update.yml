@@ -2,6 +2,8 @@ name: Plugin asset/readme update
 
 on:
   push:
+    tags-ignore:
+      - '**'
     paths:
       - 'assets/**'
       - 'readme.txt'
