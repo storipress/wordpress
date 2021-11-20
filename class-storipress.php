@@ -109,9 +109,7 @@ final class Storipress {
 	 * @return void
 	 */
 	protected function export() {
-		do_action( 'storipress_export' );
-
-		ob_clean();
+		ob_end_clean();
 
 		$filename = sprintf( 'storipress-exports-%d-%03d.ndjson', time(), wp_rand( 0, 999 ) );
 
