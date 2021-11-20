@@ -281,7 +281,7 @@ final class Storipress {
 			); /* db call ok; no-cache ok */
 
 			foreach ( $post_ids as $post_id ) {
-				yield $post_id;
+				yield (int) $post_id;
 			}
 		}
 	}
