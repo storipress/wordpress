@@ -234,7 +234,7 @@ final class Storipress {
 	 * @return self
 	 */
 	protected function export_posts(): Storipress {
-		foreach ( $this->get_post_ids() as $post_id ) {
+		foreach ( $this->get_post_ids() as $idx => $post_id ) {
 			$post = get_post( $post_id );
 
 			setup_postdata( $post );
@@ -246,6 +246,10 @@ final class Storipress {
 					$this->get_post_taxonomies( $post )
 				)
 			);
+
+			if ( 0 === $idx % 500 ) {
+				wp_cache_flush();
+			}
 		}
 
 		return $this;
