@@ -46,7 +46,7 @@ final class Storipress {
 	 *
 	 * @return Storipress
 	 *
-	 * @since 1.0.0
+	 * @since 0.0.1
 	 */
 	public static function get_instance(): Storipress {
 		// If the single instance hasn't been set, set it now.
