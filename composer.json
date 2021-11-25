@@ -4,8 +4,7 @@
   "description": "Export your WordPress to Storipress by just one-click.",
   "license": "proprietary",
   "require": {
-    "php": ">=7.3",
-    "ext-json": "*"
+    "php": ">=7.2"
   },
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "~0.7",

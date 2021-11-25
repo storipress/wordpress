@@ -13,7 +13,7 @@
  * Description:       Export your WordPress data to Storipress by one-click.
  * Version:           0.0.3
  * Requires at least: 5.0
- * Requires PHP:      7.3
+ * Requires PHP:      7.2
  * Author:            Storipress
  * Author URI:        https://storipress.com
  * Text Domain:       storipress
@@ -26,8 +26,8 @@ if ( ! defined( 'WPINC' ) ) {
 	die();
 }
 
-if ( version_compare( PHP_VERSION, '7.3.0', '<' ) ) {
-	wp_die( 'Storipress Exporter requires PHP 7.3 or later.' );
+if ( version_compare( PHP_VERSION, '7.2.0', '<' ) ) {
+	wp_die( 'Storipress Exporter requires PHP 7.2 or later.' );
 }
 
 require_once __DIR__ . '/class-storipress.php';
