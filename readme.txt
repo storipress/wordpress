@@ -32,6 +32,9 @@ Bug reports for the Storipress Migrator plugin are welcome over on our [GitHub r
 
 == Changelog ==
 
+= 0.0.4 =
+* Support PHP 7.2
+
 = 0.0.3 =
 * Fix the crash issue when there are more than ten thousand posts
 
