@@ -1,24 +1,28 @@
 {
   "name": "storipress/wordpress-exporter",
-  "type": "library",
   "description": "Export your WordPress to Storipress by just one-click.",
   "license": "proprietary",
+  "type": "library",
   "require": {
     "php": ">=7.2"
   },
   "require-dev": {
-    "dealerdirect/phpcodesniffer-composer-installer": "~0.7",
-    "ergebnis/composer-normalize": "~2.15",
-    "phpunit/phpunit": "~9.5",
-    "squizlabs/php_codesniffer": "~3.6",
-    "wp-cli/wp-cli": "~2.5",
-    "wp-coding-standards/wpcs": "~2.3"
+    "dealerdirect/phpcodesniffer-composer-installer": "~0.7.2",
+    "ergebnis/composer-normalize": "~2.26.0",
+    "phpunit/phpunit": "~9.5.20",
+    "squizlabs/php_codesniffer": "~3.6.2",
+    "wp-cli/wp-cli": "~2.6.0",
+    "wp-coding-standards/wpcs": "~2.3.0"
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "ergebnis/composer-normalize": true
+    },
     "optimize-autoloader": true,
     "preferred-install": "dist",
     "sort-packages": true
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+  }
 }
