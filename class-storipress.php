@@ -22,7 +22,7 @@ final class Storipress {
 	 *
 	 * @var string
 	 */
-	protected $version = '0.0.4';
+	protected $version = '0.0.5';
 
 	/**
 	 * Instance of this class.
