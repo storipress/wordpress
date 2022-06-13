@@ -197,10 +197,15 @@ final class Storipress {
 		$categories = get_terms(
 			array(
 				'taxonomy'   => 'category',
-				'orderby'    => 'term_id',
+				'orderby'    => 'name',
+				'order'      => 'ASC',
 				'hide_empty' => false,
 			)
 		);
+
+		uasort($categories, function ($left, $right) {
+			return $left->parent <=> $right->parent;
+		});
 
 		foreach ( $categories as $category ) {
 			$this->flush( 'category', $category->to_array() );
