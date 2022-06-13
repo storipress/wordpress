@@ -203,9 +203,12 @@ final class Storipress {
 			)
 		);
 
-		uasort($categories, function ($left, $right) {
-			return $left->parent <=> $right->parent;
-		});
+		uasort(
+			$categories,
+			function ( $left, $right ) {
+				return $left->parent <=> $right->parent;
+			}
+		);
 
 		foreach ( $categories as $category ) {
 			$this->flush( 'category', $category->to_array() );
