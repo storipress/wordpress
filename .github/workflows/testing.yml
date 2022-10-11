@@ -9,14 +9,16 @@ on:
     paths:
       - '**.php'
       - 'composer.*'
+      - '.github/workflows/testing.yml'
   pull_request:
     paths:
       - '**.php'
       - 'composer.*'
+      - '.github/workflows/testing.yml'
 
 jobs:
-  phpcs:
-    name: PHP ${{ matrix.php }}
+  testing:
+    name: PHP ${{ matrix.php }}, Wordpress ${{ matrix.wordpress }}, DB ${{ matrix.db }}, PHPUnit ${{ matrix.phpunit }}
 
     runs-on: ubuntu-latest
 
@@ -24,7 +26,45 @@ jobs:
       fail-fast: false
 
       matrix:
-        php: [ '8.0' ]
+        php: [ '8.0', '7.4', '7.3', '7.2' ]
+        wordpress: [ '6.0.2', '5.9.4', '5.8.5', '5.7.7', '5.6.9', '5.5.10', '5.4.11', '5.3.13', '5.2.16', '5.1.14', '5.0.17' ]
+        db: [ 'mariadb:10.9.2' ]
+        exclude:
+          - { php:7.4, wordpress:5.0.17 }
+          - { php:7.4, wordpress:5.1.14 }
+          - { php:7.4, wordpress:5.2.16 }
+          - { php:8.0, wordpress:5.0.17 }
+          - { php:8.0, wordpress:5.1.14 }
+          - { php:8.0, wordpress:5.2.16 }
+          - { php:8.0, wordpress:5.3.13 }
+          - { php:8.0, wordpress:5.4.11 }
+          - { php:8.0, wordpress:5.5.10 }
+        include:
+          - { php:7.2, wordpress:6.0.2, phpunit:8.5.30 }
+          - { php:7.3, wordpress:6.0.2, phpunit:9.5.20 }
+          - { php:7.4, wordpress:6.0.2, phpunit:9.5.20 }
+          - { php:8.0, wordpress:6.0.2, phpunit:9.5.20 }
+          - { php:7.2, wordpress:5.9.4, phpunit:8.5.30 }
+          - { php:7.3, wordpress:5.9.4, phpunit:9.5.20 }
+          - { php:7.4, wordpress:5.9.4, phpunit:9.5.20 }
+          - { php:8.0, wordpress:5.9.4, phpunit:9.5.20 }
+          - { wordpress:5.8.5, phpunit:7.5.20 }
+          - { wordpress:5.7.7, phpunit:7.5.20 }
+          - { wordpress:5.6.9, phpunit:7.5.20 }
+          - { wordpress:5.5.10, phpunit:7.5.20 }
+          - { wordpress:5.4.11, phpunit:7.5.20 }
+          - { wordpress:5.3.13, phpunit:7.5.20 }
+          - { wordpress:5.2.16, phpunit:7.5.20 }
+          - { wordpress:5.1.14, phpunit:7.5.20 }
+          - { wordpress:5.0.17, phpunit:6.5.14 }
+
+    services:
+      mysql:
+        image: ${{ matrix.db }}
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+        ports:
+          - 3306:3306
 
     steps:
       - uses: actions/checkout@v3
@@ -45,8 +85,11 @@ jobs:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
 
+      - name: Set PHPUnit set specific version
+        run: composer require phpunit/phpunit:~${{ matrix.phpunit }} --dev --no-interaction --no-progress --no-update
+
       - name: Install dependencies
-        run: composer install --no-interaction --no-progress
+        run: composer update --with-all-dependencies --no-interaction --no-progress
 
       - name: Check runtime dependencies
         run: composer check-platform-reqs
@@ -59,3 +102,9 @@ jobs:
 
       - name: Run coding style checker
         run: ./vendor/bin/phpcs -v --standard=WordPress -- *.php
+
+      - name: Install WP Tests
+        run: bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1 ${{ matrix.wordpress }}
+
+      - name: phpunit tests
+        run: ./vendor/bin/phpunit
