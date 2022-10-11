@@ -30,33 +30,33 @@ jobs:
         wordpress: [ '6.0.2', '5.9.4', '5.8.5', '5.7.7', '5.6.9', '5.5.10', '5.4.11', '5.3.13', '5.2.16', '5.1.14', '5.0.17' ]
         db: [ 'mariadb:10.9.2' ]
         exclude:
-          - { php:7.4, wordpress:5.0.17 }
-          - { php:7.4, wordpress:5.1.14 }
-          - { php:7.4, wordpress:5.2.16 }
-          - { php:8.0, wordpress:5.0.17 }
-          - { php:8.0, wordpress:5.1.14 }
-          - { php:8.0, wordpress:5.2.16 }
-          - { php:8.0, wordpress:5.3.13 }
-          - { php:8.0, wordpress:5.4.11 }
-          - { php:8.0, wordpress:5.5.10 }
+          - { php: '7.4', wordpress: '5.0.17' }
+          - { php: '7.4', wordpress: '5.1.14' }
+          - { php: '7.4', wordpress: '5.2.16' }
+          - { php: '8.0', wordpress: '5.0.17' }
+          - { php: '8.0', wordpress: '5.1.14' }
+          - { php: '8.0', wordpress: '5.2.16' }
+          - { php: '8.0', wordpress: '5.3.13' }
+          - { php: '8.0', wordpress: '5.4.11' }
+          - { php: '8.0', wordpress: '5.5.10' }
         include:
-          - { php:7.2, wordpress:6.0.2, phpunit:8.5.30 }
-          - { php:7.3, wordpress:6.0.2, phpunit:9.5.20 }
-          - { php:7.4, wordpress:6.0.2, phpunit:9.5.20 }
-          - { php:8.0, wordpress:6.0.2, phpunit:9.5.20 }
-          - { php:7.2, wordpress:5.9.4, phpunit:8.5.30 }
-          - { php:7.3, wordpress:5.9.4, phpunit:9.5.20 }
-          - { php:7.4, wordpress:5.9.4, phpunit:9.5.20 }
-          - { php:8.0, wordpress:5.9.4, phpunit:9.5.20 }
-          - { wordpress:5.8.5, phpunit:7.5.20 }
-          - { wordpress:5.7.7, phpunit:7.5.20 }
-          - { wordpress:5.6.9, phpunit:7.5.20 }
-          - { wordpress:5.5.10, phpunit:7.5.20 }
-          - { wordpress:5.4.11, phpunit:7.5.20 }
-          - { wordpress:5.3.13, phpunit:7.5.20 }
-          - { wordpress:5.2.16, phpunit:7.5.20 }
-          - { wordpress:5.1.14, phpunit:7.5.20 }
-          - { wordpress:5.0.17, phpunit:6.5.14 }
+          - { php: '7.2', wordpress: '6.0.2', phpunit: '8.5.30' }
+          - { php: '7.3', wordpress: '6.0.2', phpunit: '9.5.20' }
+          - { php: '7.4', wordpress: '6.0.2', phpunit: '9.5.20' }
+          - { php: '8.0', wordpress: '6.0.2', phpunit: '9.5.20' }
+          - { php: '7.2', wordpress: '5.9.4', phpunit: '8.5.30' }
+          - { php: '7.3', wordpress: '5.9.4', phpunit: '9.5.20' }
+          - { php: '7.4', wordpress: '5.9.4', phpunit: '9.5.20' }
+          - { php: '8.0', wordpress: '5.9.4', phpunit: '9.5.20' }
+          - { wordpress: '5.8.5', phpunit: '7.5.20' }
+          - { wordpress: '5.7.7', phpunit: '7.5.20' }
+          - { wordpress: '5.6.9', phpunit: '7.5.20' }
+          - { wordpress: '5.5.10', phpunit: '7.5.20' }
+          - { wordpress: '5.4.11', phpunit: '7.5.20' }
+          - { wordpress: '5.3.13', phpunit: '7.5.20' }
+          - { wordpress: '5.2.16', phpunit: '7.5.20' }
+          - { wordpress: '5.1.14', phpunit: '7.5.20' }
+          - { wordpress: '5.0.17', phpunit: '6.5.14' }
 
     services:
       mysql:
