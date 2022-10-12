@@ -97,7 +97,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+          key: ${{ runner.os }}-composer-${{ matrix.php }}-${{ matrix.wordpress }}-${{ matrix.phpunit }}-${{ hashFiles('**/composer.lock') }}
 
       - name: Set ergebnis/composer-normalize:~2.19.0 to PHP 7.3 and older versions
         if: ${{ '7.3' >= matrix.php }}
