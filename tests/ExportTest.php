@@ -68,7 +68,7 @@ class ExportTest extends WP_UnitTestCase {
 		
 		$lines = ob_get_clean();
 		
-		foreach (explode("\n", $lines) as $line) {
+		foreach (explode(PHP_EOL, $lines) as $line) {
 			if (empty($line)) {
 				continue;
 			}
@@ -121,7 +121,7 @@ class ExportTest extends WP_UnitTestCase {
 		
 		$lines = ob_get_clean();
 		
-		foreach (explode("\n", $lines) as $line) {
+		foreach (explode(PHP_EOL, $lines) as $line) {
 			if (empty($line)) {
 				continue;
 			}
@@ -178,7 +178,7 @@ class ExportTest extends WP_UnitTestCase {
 		
 		$lines = ob_get_clean();
 		
-		foreach (explode("\n", $lines) as $line) {
+		foreach (explode(PHP_EOL, $lines) as $line) {
 			if (empty($line)) {
 				continue;
 			}
@@ -249,7 +249,7 @@ class ExportTest extends WP_UnitTestCase {
 		
 		$lines = ob_get_clean();
 		
-		foreach (explode("\n", $lines) as $line) {
+		foreach (explode(PHP_EOL, $lines) as $line) {
 			if (empty($line)) {
 				continue;
 			}
