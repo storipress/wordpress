@@ -52,25 +52,25 @@ jobs:
           - { php: '8.1', wordpress: '5.7' }
           - { php: '8.1', wordpress: '5.8' }
         include:
-          - { php: '7.2', wordpress: '6.0', phpunit: '8.5.30' }
-          - { php: '7.3', wordpress: '6.0', phpunit: '9.5.20' }
-          - { php: '7.4', wordpress: '6.0', phpunit: '9.5.20' }
-          - { php: '8.0', wordpress: '6.0', phpunit: '9.5.20' }
-          - { php: '8.1', wordpress: '6.0', phpunit: '9.5.20' }
-          - { php: '7.2', wordpress: '5.9', phpunit: '8.5.30' }
-          - { php: '7.3', wordpress: '5.9', phpunit: '9.5.20' }
-          - { php: '7.4', wordpress: '5.9', phpunit: '9.5.20' }
-          - { php: '8.0', wordpress: '5.9', phpunit: '9.5.20' }
-          - { php: '8.1', wordpress: '5.9', phpunit: '9.5.20' }
-          - { wordpress: '5.8', phpunit: '7.5.20' }
-          - { wordpress: '5.7', phpunit: '7.5.20' }
-          - { wordpress: '5.6', phpunit: '7.5.20' }
-          - { wordpress: '5.5', phpunit: '7.5.20' }
-          - { wordpress: '5.4', phpunit: '7.5.20' }
-          - { wordpress: '5.3', phpunit: '7.5.20' }
-          - { wordpress: '5.2', phpunit: '7.5.20' }
-          - { wordpress: '5.1', phpunit: '7.5.20' }
-          - { wordpress: '5.0', phpunit: '6.5.14' }
+          - { php: '7.2', wordpress: '6.0', phpunit: '8.5' }
+          - { php: '7.3', wordpress: '6.0', phpunit: '9.5' }
+          - { php: '7.4', wordpress: '6.0', phpunit: '9.5' }
+          - { php: '8.0', wordpress: '6.0', phpunit: '9.5' }
+          - { php: '8.1', wordpress: '6.0', phpunit: '9.5' }
+          - { php: '7.2', wordpress: '5.9', phpunit: '8.5' }
+          - { php: '7.3', wordpress: '5.9', phpunit: '9.5' }
+          - { php: '7.4', wordpress: '5.9', phpunit: '9.5' }
+          - { php: '8.0', wordpress: '5.9', phpunit: '9.5' }
+          - { php: '8.1', wordpress: '5.9', phpunit: '9.5' }
+          - { wordpress: '5.8', phpunit: '7.5' }
+          - { wordpress: '5.7', phpunit: '7.5' }
+          - { wordpress: '5.6', phpunit: '7.5' }
+          - { wordpress: '5.5', phpunit: '7.5' }
+          - { wordpress: '5.4', phpunit: '7.5' }
+          - { wordpress: '5.3', phpunit: '7.5' }
+          - { wordpress: '5.2', phpunit: '7.5' }
+          - { wordpress: '5.1', phpunit: '7.5' }
+          - { wordpress: '5.0', phpunit: '6.5' }
 
     services:
       mysql:
