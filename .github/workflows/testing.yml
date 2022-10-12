@@ -18,7 +18,7 @@ on:
 
 jobs:
   testing:
-    name: PHP ${{ matrix.php }}, Wordpress ${{ matrix.wordpress }}, DB ${{ matrix.db }}, PHPUnit ${{ matrix.phpunit }}
+    name: PHP ${{ matrix.php }}, Wordpress ${{ matrix.wordpress }}
 
     runs-on: ubuntu-latest
 
@@ -28,7 +28,6 @@ jobs:
       matrix:
         php: [ '8.1', '8.0', '7.4', '7.3', '7.2' ]
         wordpress: [ '6.0', '5.9', '5.8', '5.7', '5.6', '5.5', '5.4', '5.3', '5.2', '5.1', '5.0' ]
-        db: [ 'mariadb:10.9.2' ]
         exclude:
           - { php: '7.4', wordpress: '5.0' }
           - { php: '7.4', wordpress: '5.1' }
@@ -51,30 +50,10 @@ jobs:
           - { php: '8.1', wordpress: '5.6' }
           - { php: '8.1', wordpress: '5.7' }
           - { php: '8.1', wordpress: '5.8' }
-        include:
-          - { php: '7.2', wordpress: '6.0', phpunit: '8.5' }
-          - { php: '7.3', wordpress: '6.0', phpunit: '9.5' }
-          - { php: '7.4', wordpress: '6.0', phpunit: '9.5' }
-          - { php: '8.0', wordpress: '6.0', phpunit: '9.5' }
-          - { php: '8.1', wordpress: '6.0', phpunit: '9.5' }
-          - { php: '7.2', wordpress: '5.9', phpunit: '8.5' }
-          - { php: '7.3', wordpress: '5.9', phpunit: '9.5' }
-          - { php: '7.4', wordpress: '5.9', phpunit: '9.5' }
-          - { php: '8.0', wordpress: '5.9', phpunit: '9.5' }
-          - { php: '8.1', wordpress: '5.9', phpunit: '9.5' }
-          - { wordpress: '5.8', phpunit: '7.5' }
-          - { wordpress: '5.7', phpunit: '7.5' }
-          - { wordpress: '5.6', phpunit: '7.5' }
-          - { wordpress: '5.5', phpunit: '7.5' }
-          - { wordpress: '5.4', phpunit: '7.5' }
-          - { wordpress: '5.3', phpunit: '7.5' }
-          - { wordpress: '5.2', phpunit: '7.5' }
-          - { wordpress: '5.1', phpunit: '7.5' }
-          - { wordpress: '5.0', phpunit: '6.5' }
 
     services:
       mysql:
-        image: ${{ matrix.db }}
+        image: mariadb:10.9.2
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
         ports:
@@ -99,15 +78,24 @@ jobs:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ matrix.php }}-${{ matrix.wordpress }}-${{ matrix.phpunit }}-${{ hashFiles('**/composer.lock') }}
 
-      - name: Set ergebnis/composer-normalize:~2.19.0 to PHP 7.3 and older versions
-        if: ${{ '7.3' >= matrix.php }}
-        run: composer require ergebnis/composer-normalize:~2.19.0 --dev --no-interaction --no-progress --no-update
+      - name: Set PHPUnit for WordPress 5.0
+        if: ${{ matrix.wordpress <= '5.0' }}
+        run: composer require phpunit/phpunit:~6.5 --dev --no-interaction --no-progress --no-update
 
-      - name: Set PHPUnit to specific version
-        run: composer require phpunit/phpunit:~${{ matrix.phpunit }} --dev --no-interaction --no-progress --no-update
+      - name: Set PHPUnit for WordPress 5.1 ~ 5.8
+        if: ${{ matrix.wordpress >= '5.1' && matrix.wordpress <= '5.8' }}
+        run: composer require phpunit/phpunit:~7.5 --dev --no-interaction --no-progress --no-update
+
+      - name: Set PHPUnit for WordPress 5.9 ~ 6.0
+        if: ${{ matrix.wordpress >= '5.9' && matrix.php <= '7.2' }}
+        run: composer require phpunit/phpunit:~8.5 --dev --no-interaction --no-progress --no-update
+
+      - name: Set PHPUnit for WordPress 5.9 ~ 6.0
+        if: ${{ matrix.wordpress >= '5.9' && matrix.php >= '7.3' }}
+        run: composer require phpunit/phpunit:~9.5 --dev --no-interaction --no-progress --no-update
 
       - name: Install dependencies
-        run: composer update --with-all-dependencies --no-interaction --no-progress
+        run: composer update --no-interaction --no-progress
 
       - name: Check runtime dependencies
         run: composer check-platform-reqs
@@ -122,7 +110,7 @@ jobs:
         run: ./vendor/bin/phpcs -v --standard=WordPress -- *.php
 
       - name: Install WP Tests
-        run: bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1 ${{ matrix.wordpress }}
+        run: bash ./bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1 ${{ matrix.wordpress }}
 
       - name: phpunit tests
         run: ./vendor/bin/phpunit
