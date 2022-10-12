@@ -88,7 +88,11 @@ jobs:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
 
-      - name: Set PHPUnit set specific version
+      - name: Set ergebnis/composer-normalize:~2.19.0 to Laravel 7.3 and older versions
+        if: ${{ '7.3' >= matrix.php }}
+        run: composer require ergebnis/composer-normalize:~2.19.0 --dev --no-interaction --no-progress --no-update
+
+      - name: Set PHPUnit to specific version
         run: composer require phpunit/phpunit:~${{ matrix.phpunit }} --dev --no-interaction --no-progress --no-update
 
       - name: Install dependencies
