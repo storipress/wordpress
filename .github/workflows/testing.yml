@@ -18,7 +18,7 @@ on:
 
 jobs:
   testing:
-    name: PHP ${{ matrix.php }}, Wordpress ${{ matrix.wordpress }}
+    name: PHP ${{ matrix.php }}, WordPress ${{ matrix.wordpress }}
 
     runs-on: ubuntu-latest
 
