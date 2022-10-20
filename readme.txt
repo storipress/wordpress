@@ -32,6 +32,9 @@ Bug reports for the Storipress Migrator plugin are welcome over on our [GitHub r
 
 == Changelog ==
 
+= 0.0.8 =
+* Export user caps information
+
 = 0.0.7 =
 * Fix the OOM issue when exporting a large set of users
 
