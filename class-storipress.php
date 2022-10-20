@@ -163,26 +163,37 @@ final class Storipress {
 	 * @return self
 	 */
 	protected function export_users(): Storipress {
-		/**
-		 * Array of WP_User object.
-		 *
-		 * @var WP_User[] $users
-		 */
+		$result = count_users();
 
-		$users = get_users(
-			array(
-				'fields' => 'all_with_meta',
-			)
-		);
+		$perPage = 50;
 
-		foreach ( $users as $user ) {
-			$this->flush(
-				'user',
-				array_diff_key(
-					$user->to_array(),
-					array_flip( array( 'user_pass' ) )
+		$total = intval( ceil( $result['total_users'] / $perPage ) );
+
+		for ($page = 1; $page <= $total; ++$page) {
+			/**
+			 * Array of WP_User object.
+			 *
+			 * @var WP_User[] $users
+			 */
+
+			$users = get_users(
+				array(
+					'fields' => 'all_with_meta',
+					'number' => $perPage,
+					'paged' => $page,
+					'orderby' => 'ID',
 				)
 			);
+
+			foreach ( $users as $user ) {
+				$this->flush(
+					'user',
+					array_diff_key(
+						$user->to_array(),
+						array_flip( array( 'user_pass' ) )
+					)
+				);
+			}
 		}
 
 		return $this;
