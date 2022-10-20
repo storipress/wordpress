@@ -1,7 +1,7 @@
 === Storipress ===
 Tags: blogging, export, storipress, migrate, publishing
 Requires at least: 5.0
-Tested up to: 6.0.0
+Tested up to: 6.0.3
 Requires PHP: 7.2
 License: GPL-3.0
 License URI: https://github.com/storipress/wp-storipress-exporter/blob/main/LICENSE
@@ -31,6 +31,9 @@ Bug reports for the Storipress Migrator plugin are welcome over on our [GitHub r
 3. Access the exporter functionality under Tools -> Export to Storipress
 
 == Changelog ==
+
+= 0.0.7 =
+* Fix the OOM issue when exporting a large set of users
 
 = 0.0.6 =
 * Ensure category exporting hierarchy
