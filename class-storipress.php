@@ -165,11 +165,11 @@ final class Storipress {
 	protected function export_users(): Storipress {
 		$result = count_users();
 
-		$perPage = 50;
+		$per_page = 50;
 
-		$total = intval( ceil( $result['total_users'] / $perPage ) );
+		$total = intval( ceil( $result['total_users'] / $per_page ) );
 
-		for ($page = 1; $page <= $total; ++$page) {
+		for ( $page = 1; $page <= $total; ++$page ) {
 			/**
 			 * Array of WP_User object.
 			 *
@@ -178,9 +178,9 @@ final class Storipress {
 
 			$users = get_users(
 				array(
-					'fields' => 'all_with_meta',
-					'number' => $perPage,
-					'paged' => $page,
+					'fields'  => 'all_with_meta',
+					'number'  => $per_page,
+					'paged'   => $page,
 					'orderby' => 'ID',
 				)
 			);
