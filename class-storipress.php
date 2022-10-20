@@ -189,7 +189,7 @@ final class Storipress {
 				$this->flush(
 					'user',
 					array_diff_key(
-						$user->to_array(),
+						array_merge( $user->to_array(), array( 'caps' => $user->allcaps ) ),
 						array_flip( array( 'user_pass' ) )
 					)
 				);
