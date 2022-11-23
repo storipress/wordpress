@@ -62,40 +62,40 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup PHP, Tools and Extensions
+      - name: Setup PHP with PECL extension
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           coverage: xdebug
 
       - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "COMPOSER_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
 
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
+          path: ${{ env.COMPOSER_DIR }}
           key: ${{ runner.os }}-composer-${{ matrix.php }}-${{ matrix.wordpress }}-${{ matrix.phpunit }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
 
       - name: Set PHPUnit for WordPress 5.0
         if: ${{ matrix.wordpress <= '5.0' }}
-        run: composer require phpunit/phpunit:~6.5 --dev --no-interaction --no-progress --no-update
+        run: composer require phpunit/phpunit:~6.5 --dev --no-update
 
       - name: Set PHPUnit for WordPress 5.1 ~ 5.8
         if: ${{ matrix.wordpress >= '5.1' && matrix.wordpress <= '5.8' }}
-        run: composer require phpunit/phpunit:~7.5 --dev --no-interaction --no-progress --no-update
+        run: composer require phpunit/phpunit:~7.5 --dev --no-update
 
       - name: Set PHPUnit for WordPress 5.9 ~ 6.0
         if: ${{ matrix.wordpress >= '5.9' && matrix.php <= '7.2' }}
-        run: composer require phpunit/phpunit:~8.5 --dev --no-interaction --no-progress --no-update
+        run: composer require phpunit/phpunit:~8.5 --dev --no-update
 
       - name: Set PHPUnit for WordPress 5.9 ~ 6.0
         if: ${{ matrix.wordpress >= '5.9' && matrix.php >= '7.3' }}
-        run: composer require phpunit/phpunit:~9.5 --dev --no-interaction --no-progress --no-update
+        run: composer require phpunit/phpunit:~9.5 --dev --no-update
 
       - name: Install dependencies
-        run: composer update --no-interaction --no-progress
+        run: composer update --no-progress --no-interaction
 
       - name: Check runtime dependencies
         run: composer check-platform-reqs
