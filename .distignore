@@ -1,6 +1,6 @@
 /.github
 /.git
-
+.deepsource.toml
 .distignore
 .gitignore
 composer.json
