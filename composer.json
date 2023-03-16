@@ -7,7 +7,7 @@
     "php": ">=7.2"
   },
   "require-dev": {
-    "dealerdirect/phpcodesniffer-composer-installer": "~0.7",
+    "dealerdirect/phpcodesniffer-composer-installer": "~1.0",
     "ergebnis/composer-normalize": "~2.19",
     "phpunit/phpunit": "~6.5 || ~7.5 || ~8.5 || ~9.5",
     "wp-cli/wp-cli": "~2.6",
