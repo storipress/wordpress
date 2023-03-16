@@ -11,7 +11,7 @@ License URI: https://github.com/storipress/wp-storipress-exporter/blob/main/LICE
 This official Storipress plugin allows you export your WordPress categories and content in a format that can be easily imported into Storipress.
 
 == Description ==
-This plugin is currently in early beta. Help us make the plugin better by opening issues in our [Github repo](https://github.com/storipress/wp-storipress-exporter)!
+This plugin is currently in early beta. Help us make the plugin better by opening issues in our [Github Repo](https://github.com/storipress/wp-storipress-exporter/issues)!
 
 ##Features overview
 The Storipress Migrator plugin will export as much blog and publication data as it can into a clean set of exported files. 
@@ -23,7 +23,7 @@ The Storipress Migrator plugin will export as much blog and publication data as 
 - Exporting meta is only supported for users using Yoast (for now). If you use another SEO plugin, please create an issue in our Github repo, or modify the plugin and create a pull request!
 
 ##Bug reports
-Bug reports for the Storipress Migrator plugin are welcome over on our [GitHub repository](https://github.com/storipress/wp-storipress-exporter).
+Bug reports for the Storipress Migrator plugin are welcome over on our [GitHub Repository](https://github.com/storipress/wp-storipress-exporter/issues).
 
 == Installation ==
 1. Use the Add New Plugin in the WordPress admin area
