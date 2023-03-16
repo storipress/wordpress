@@ -15,6 +15,9 @@ on:
       - '**.php'
       - 'composer.*'
       - '.github/workflows/testing.yml'
+  schedule:
+    # run tests on every week Monday
+    - cron: '0 0 * * 1'
 
 jobs:
   testing:
