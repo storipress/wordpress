@@ -32,6 +32,9 @@ Bug reports for the Storipress Migrator plugin are welcome over on our [GitHub R
 
 == Changelog ==
 
+= 0.0.9 =
+* Fix category hierarchy issue
+
 = 0.0.8 =
 * Export user caps information
 
