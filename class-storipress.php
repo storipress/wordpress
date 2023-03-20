@@ -29,7 +29,7 @@ final class Storipress {
 	 *
 	 * @since 0.0.1
 	 *
-	 * @var Storipress
+	 * @var Storipress|null
 	 */
 	protected static $instance = null;
 
@@ -63,7 +63,9 @@ final class Storipress {
 	 * @return void
 	 */
 	public function callback() {
-		if ( get_current_screen()->id !== 'export' ) {
+		$screen = get_current_screen();
+
+		if ( null === $screen || 'export' !== $screen->id ) {
 			return;
 		}
 
@@ -223,7 +225,7 @@ final class Storipress {
 					)
 				);
 
-				if ( empty( $items ) ) {
+				if ( ! is_array( $items ) || empty( $items ) ) {
 					continue;
 				}
 
@@ -263,6 +265,10 @@ final class Storipress {
 			)
 		);
 
+		if ( $tags instanceof WP_Error ) {
+			return $this;
+		}
+
 		foreach ( $tags as $tag ) {
 			$this->flush( 'tag', $tag->to_array() );
 		}
@@ -278,6 +284,10 @@ final class Storipress {
 	protected function export_posts(): Storipress {
 		foreach ( $this->get_post_ids() as $idx => $post_id ) {
 			$post = get_post( $post_id );
+
+			if ( null === $post ) {
+				continue;
+			}
 
 			setup_postdata( $post );
 
@@ -302,14 +312,14 @@ final class Storipress {
 	 *
 	 * Because there may be thousands of posts, call get_posts may run out of memory.
 	 *
-	 * @return Generator
+	 * @return Generator<int, int>
 	 */
 	protected function get_post_ids(): Generator {
 		global $wpdb;
 
-		$result = $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} ORDER BY ID DESC LIMIT 0, 1" ); /* db call ok; no-cache ok */
+		$result = $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} ORDER BY ID DESC LIMIT 0, 1" );
 
-		$max_id = (int) $result[0] ?? 0;
+		$max_id = (int) ( $result[0] ?? 0 );
 
 		$estimate_time = intval( ceil( $max_id / 400 ) );
 
@@ -330,7 +340,7 @@ final class Storipress {
 					$lower_bound,
 					$upper_bound
 				)
-			); /* db call ok; no-cache ok */
+			);
 
 			foreach ( $post_ids as $post_id ) {
 				yield (int) $post_id;
@@ -387,7 +397,7 @@ final class Storipress {
 					case 'post_tag':
 						$terms = get_the_terms( $post, $taxonomy );
 
-						return false === $terms ? null : wp_list_pluck( $terms, 'term_id' );
+						return ( false === $terms || $terms instanceof WP_Error ) ? null : wp_list_pluck( $terms, 'term_id' );
 
 					case 'post_format':
 						$format = get_post_format( $post );
