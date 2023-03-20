@@ -119,7 +119,10 @@ jobs:
         run: composer normalize --dry-run
 
       - name: Run coding style checker
-        run: ./vendor/bin/phpcs -v --standard=WordPress -- *.php
+        run: vendor/bin/phpcs -v -n --standard=WordPress -- *.php
+
+      - name: Run static analysis
+        run: vendor/bin/phpstan --memory-limit=-1 --xdebug --verbose
 
       - name: Install WP Tests
         run: bash ./bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1 ${{ matrix.wordpress }}
