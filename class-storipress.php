@@ -223,6 +223,10 @@ final class Storipress {
 					)
 				);
 
+				if ( empty( $items ) ) {
+					continue;
+				}
+
 				array_push( $categories, ...$items );
 
 				array_push( $temp, ...$items );
