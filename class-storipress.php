@@ -223,9 +223,9 @@ final class Storipress {
 					)
 				);
 
-				array_push($categories, ...$items);
+				array_push( $categories, ...$items );
 
-				array_push($temp, ...$items);
+				array_push( $temp, ...$items );
 			}
 
 			$parents = array_map(
@@ -236,7 +236,7 @@ final class Storipress {
 			);
 
 			$parents = array_values( array_unique( $parents ) );
-		} while ( ! empty( $parents ) ) ;
+		} while ( ! empty( $parents ) );
 
 		foreach ( $categories as $category ) {
 			$this->flush( 'category', $category->to_array() );
