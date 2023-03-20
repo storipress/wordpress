@@ -1,0 +1,12 @@
+includes:
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+    level: max
+
+    parallel:
+        maximumNumberOfProcesses: 4
+
+    paths:
+        - class-storipress.php
+        - storipress.php
