@@ -9,9 +9,11 @@
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "~1.0",
     "ergebnis/composer-normalize": "~2.19",
+    "phpstan/phpstan": "~1.10",
     "phpunit/phpunit": "~6.5 || ~7.5 || ~8.5 || ~9.5",
+    "szepeviktor/phpstan-wordpress": "~1.1",
     "wp-cli/wp-cli": "~2.6",
-    "wp-coding-standards/wpcs": "~2.3",
+    "wp-coding-standards/wpcs": "dev-develop",
     "yoast/phpunit-polyfills": "~1.0"
   },
   "minimum-stability": "dev",
