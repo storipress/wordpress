@@ -205,21 +205,38 @@ final class Storipress {
 	 * @return self
 	 */
 	protected function export_categories(): Storipress {
-		$categories = get_terms(
-			array(
-				'taxonomy'   => 'category',
-				'orderby'    => 'name',
-				'order'      => 'ASC',
-				'hide_empty' => false,
-			)
-		);
+		$parents = array( 0 );
 
-		uasort(
-			$categories,
-			function ( $left, $right ) {
-				return $left->parent <=> $right->parent;
+		$categories = array();
+
+		do {
+			$temp = array();
+
+			foreach ( $parents as $parent ) {
+				$items = get_terms(
+					array(
+						'taxonomy'   => 'category',
+						'orderby'    => 'name',
+						'order'      => 'ASC',
+						'hide_empty' => false,
+						'parent'     => $parent,
+					)
+				);
+
+				array_push($categories, ...$items);
+
+				array_push($temp, ...$items);
 			}
-		);
+
+			$parents = array_map(
+				function ( WP_Term $item ) {
+					return $item->term_id;
+				},
+				$temp
+			);
+
+			$parents = array_values( array_unique( $parents ) );
+		} while ( ! empty( $parents ) ) ;
 
 		foreach ( $categories as $category ) {
 			$this->flush( 'category', $category->to_array() );
