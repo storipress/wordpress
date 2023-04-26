@@ -25,6 +25,15 @@ final class Storipress {
 	protected $version = '0.0.9';
 
 	/**
+	 * Plugin build version.
+	 *
+	 * @since 0.0.10
+	 *
+	 * @var integer
+	 */
+	protected $build = 10;
+
+	/**
 	 * Instance of this class.
 	 *
 	 * @since 0.0.1
@@ -115,7 +124,7 @@ final class Storipress {
 			ob_end_clean();
 		}
 
-		$filename = sprintf( 'storipress-exports-%d-%03d.ndjson', time(), wp_rand( 0, 999 ) );
+		$filename = sprintf( 'storipress-exports-%04d-%d-%03d.ndjson', $this->build, time(), wp_rand( 0, 999 ) );
 
 		header( 'Content-Encoding: identity' );
 
