@@ -365,6 +365,8 @@ final class Storipress {
 	 * @return mixed[]
 	 */
 	protected function get_post_data( WP_Post $post ): array {
+		$tags = get_the_tags( $post->ID );
+
 		return array(
 			'id'          => (string) $post->ID,
 			'post_id'     => empty( $post->post_parent ) ? null : (string) $post->post_parent,
@@ -374,6 +376,8 @@ final class Storipress {
 			'slug'        => $post->post_name,
 			'excerpt'     => empty( $post->post_excerpt ) ? null : $post->post_excerpt,
 			'content'     => wpautop( $post->post_content ),
+			'categories'  => wp_list_pluck( get_the_category( $post->ID ), 'term_id' ),
+			'tags'        => is_array( $tags ) ? wp_list_pluck( $tags, 'term_id' ) : array(),
 			'status'      => get_post_status( $post ),
 			'commentable' => $post->comment_status,
 			'password'    => empty( $post->post_password ) ? null : $post->post_password,
