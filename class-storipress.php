@@ -22,7 +22,7 @@ final class Storipress {
 	 *
 	 * @var string
 	 */
-	protected $version = '0.0.10';
+	protected $version = '0.0.11';
 
 	/**
 	 * Plugin build version.
