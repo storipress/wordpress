@@ -331,6 +331,8 @@ final class Storipress {
 				$plugin,
 				array(
 					'IsActive' => is_plugin_active( $file ),
+					'IsPaused' => is_plugin_paused( $file ),
+					'IsInActive' => is_plugin_inactive( $file ),
 				)
 			);
 
