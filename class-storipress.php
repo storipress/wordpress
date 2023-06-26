@@ -134,6 +134,8 @@ final class Storipress {
 
 		$this->export_site_config();
 
+		$this->export_plugins();
+
 		$this->export_users();
 
 		$this->export_categories();
@@ -141,8 +143,6 @@ final class Storipress {
 		$this->export_tags();
 
 		$this->export_posts();
-
-		$this->export_plugins();
 	}
 
 	/**
@@ -319,14 +319,21 @@ final class Storipress {
 	}
 
 	/**
-	 * export plugins.
+	 * Export plugins.
 	 *
 	 * @return self
 	 */
 	protected function export_plugins(): Storipress {
 		$plugins = get_plugins();
 
-		foreach ( $plugins as $plugin ) {
+		foreach ( $plugins as $file => $plugin ) {
+			$plugin = array_merge(
+				$plugin,
+				array(
+					'IsActive' => is_plugin_active( $file ),
+				)
+			);
+
 			$this->flush( 'plugin', $plugin );
 		}
 
