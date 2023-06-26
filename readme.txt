@@ -14,11 +14,11 @@ This official Storipress plugin allows you export your WordPress categories and 
 This plugin is currently in early beta. Help us make the plugin better by opening issues in our [Github Repo](https://github.com/storipress/wp-storipress-exporter/issues)!
 
 ##Features overview
-The Storipress Migrator plugin will export as much blog and publication data as it can into a clean set of exported files.
+The Storipress Migrator plugin will export as much blog and publication data as it can into a clean set of exported files. 
 
 - Posts, pages, tags and authors are all automatically exported and recreated for Storipress
 - Content categories will be converted automatically into desks.
-- Storipress comes with native Disqus comments.
+- Storipress comes with native Disqus comments. 
 - Storipress does not have built-in comments, but it does integrate with Disqus. Provided that your URL is the same on Storipress, Disqus will automatically migrate your comments across to Storipress.
 - Exporting meta is only supported for users using Yoast (for now). If you use another SEO plugin, please create an issue in our Github repo, or modify the plugin and create a pull request!
 
@@ -31,9 +31,6 @@ Bug reports for the Storipress Migrator plugin are welcome over on our [GitHub R
 3. Access the exporter functionality under Tools -> Export to Storipress
 
 == Changelog ==
-
-= 0.0.11 =
-* Export plugins information
 
 = 0.0.10 =
 * Add build version to filename
