@@ -134,6 +134,8 @@ final class Storipress {
 
 		$this->export_site_config();
 
+		$this->export_plugins();
+
 		$this->export_users();
 
 		$this->export_categories();
@@ -311,6 +313,30 @@ final class Storipress {
 			if ( 0 === $idx % 500 ) {
 				wp_cache_flush();
 			}
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Export plugins.
+	 *
+	 * @return self
+	 */
+	protected function export_plugins(): Storipress {
+		$plugins = get_plugins();
+
+		foreach ( $plugins as $file => $plugin ) {
+			$plugin = array_merge(
+				$plugin,
+				array(
+					'IsActive' => is_plugin_active( $file ),
+					'IsPaused' => is_plugin_paused( $file ),
+					'IsInActive' => is_plugin_inactive( $file ),
+				)
+			);
+
+			$this->flush( 'plugin', $plugin );
 		}
 
 		return $this;
