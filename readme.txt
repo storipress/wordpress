@@ -1,3 +1,8 @@
+<p align="center">
+    <a href="https://codeclimate.com/github/storipress/wp-storipress-exporter/maintainability"><img src="https://api.codeclimate.com/v1/badges/80dabfa8cbb5fd66cd1d/maintainability" /></a>
+    <a href="https://codeclimate.com/github/storipress/wp-storipress-exporter/test_coverage"><img src="https://api.codeclimate.com/v1/badges/80dabfa8cbb5fd66cd1d/test_coverage" /></a>
+ </p>
+
 === Storipress ===
 Tags: blogging, export, storipress, migrate, publishing
 Requires at least: 5.0
