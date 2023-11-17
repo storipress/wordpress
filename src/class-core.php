@@ -86,7 +86,7 @@ final class Core {
 
 		$data = wp_json_encode(
 			array(
-				'version'   => Storipress::VERSION,
+				'version'   => Storipress::instance()->version,
 				'token'     => $password[0],
 				'hash_key'  => $password[1]['password'],
 				'email'     => $user->user_email,

@@ -26,7 +26,7 @@ final class Storipress {
 	 *
 	 * @var string
 	 */
-	protected $version = '0.0.11';
+	public $version = '0.0.11';
 
 	/**
 	 * Plugin build version.
@@ -46,36 +46,36 @@ final class Storipress {
 	 */
 	protected static $instance = null;
 
-    /**
-     * Helper class.
-     *
-     * @var Core
-     */
-    public $core;
+	/**
+	 * Helper class.
+	 *
+	 * @var Core
+	 */
+	public $core;
 
-    /**
-     * Trigger class.
-     *
-     * @var Trigger_Handler
-     */
-    public $trigger;
+	/**
+	 * Trigger class.
+	 *
+	 * @var Trigger_Handler
+	 */
+	public $trigger;
 
-    /**
-     * Action class.
-     *
-     * @var Action_Handler
-     */
-    public $action;
+	/**
+	 * Action class.
+	 *
+	 * @var Action_Handler
+	 */
+	public $action;
 
 	/**
 	 * Hook into WP Core.
 	 */
 	public function __construct() {
-        $this->core = new Core();
+		$this->core = new Core();
 
-        $this->trigger = new Trigger_Handler();
+		$this->trigger = new Trigger_Handler();
 
-        $this->action = new Action_Handler();
+		$this->action = new Action_Handler();
 
 		add_action( 'admin_menu', array( &$this, 'register_menu' ) );
 		add_action( 'current_screen', array( &$this, 'callback' ) );
@@ -88,7 +88,7 @@ final class Storipress {
 	 *
 	 * @since 0.0.1
 	 */
-	public static function get_instance(): Storipress {
+	public static function instance(): Storipress {
 		// If the single instance hasn't been set, set it now.
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
@@ -144,13 +144,13 @@ final class Storipress {
 			sprintf( 'export.php?type=storipress&sp_nonce=%s', $nonce )
 		);
 
-        add_management_page(
-            'Storipress',
-            'Storipress',
-            'manage_options',
-            'storipress',
-            array( &$this, 'render_page' )
-        );
+		add_management_page(
+			'Connect to Storipress',
+			'Connect to Storipress',
+			'manage_options',
+			'connect_to_storipress',
+			array( &$this, 'render_page' )
+		);
 	}
 
 	/**
@@ -519,30 +519,30 @@ final class Storipress {
 		flush();
 	}
 
-    /**
-     * Render the admin submenu page.
-     *
-     * @since 0.0.1
-     *
-     * @return void
-     */
-    public function render_page() {
-        add_action( 'storiress/admin/menu/content', array( &$this, 'add_menu_content' ) );
+	/**
+	 * Render the admin submenu page.
+	 *
+	 * @since 0.0.1
+	 *
+	 * @return void
+	 */
+	public function render_page() {
+		add_action( 'storiress/admin/menu/content', array( &$this, 'add_menu_content' ) );
 
-        require_once __DIR__ . '/templates/page.php';
-    }
+		require_once __DIR__ . '/templates/page.php';
+	}
 
-    /**
-     * Callback for the current screen.
-     *
-     * @param string $menu The current menu.
-     * @return void
-     */
-    public function add_menu_content( $menu ) {
-        switch ( $menu ) {
-            case 'home':
-                require_once __DIR__ . '/templates/menu/home.php';
-                break;
-        }
-    }
+	/**
+	 * Callback for the current screen.
+	 *
+	 * @param string $menu The current menu.
+	 * @return void
+	 */
+	public function add_menu_content( $menu ) {
+		switch ( $menu ) {
+			case 'home':
+				require_once __DIR__ . '/templates/menu/home.php';
+				break;
+		}
+	}
 }
