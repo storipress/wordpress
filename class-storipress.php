@@ -8,6 +8,10 @@
  * @license           GPL-3.0-or-later
  */
 
+use Storipress\Storipress\Action_Handler;
+use Storipress\Storipress\Core;
+use Storipress\Storipress\Trigger_Handler;
+
 /**
  * Plugin class.
  *
@@ -42,10 +46,37 @@ final class Storipress {
 	 */
 	protected static $instance = null;
 
+    /**
+     * Helper class.
+     *
+     * @var Core
+     */
+    public $core;
+
+    /**
+     * Trigger class.
+     *
+     * @var Trigger_Handler
+     */
+    public $trigger;
+
+    /**
+     * Action class.
+     *
+     * @var Action_Handler
+     */
+    public $action;
+
 	/**
 	 * Hook into WP Core.
 	 */
 	public function __construct() {
+        $this->core = new Core();
+
+        $this->trigger = new Trigger_Handler();
+
+        $this->action = new Action_Handler();
+
 		add_action( 'admin_menu', array( &$this, 'register_menu' ) );
 		add_action( 'current_screen', array( &$this, 'callback' ) );
 	}
@@ -112,6 +143,14 @@ final class Storipress {
 			'manage_options',
 			sprintf( 'export.php?type=storipress&sp_nonce=%s', $nonce )
 		);
+
+        add_management_page(
+            'Storipress',
+            'Storipress',
+            'manage_options',
+            'storipress',
+            array( &$this, 'render_page' )
+        );
 	}
 
 	/**
@@ -479,4 +518,31 @@ final class Storipress {
 
 		flush();
 	}
+
+    /**
+     * Render the admin submenu page.
+     *
+     * @since 0.0.1
+     *
+     * @return void
+     */
+    public function render_page() {
+        add_action( 'storiress/admin/menu/content', array( &$this, 'add_menu_content' ) );
+
+        require_once __DIR__ . '/templates/page.php';
+    }
+
+    /**
+     * Callback for the current screen.
+     *
+     * @param string $menu The current menu.
+     * @return void
+     */
+    public function add_menu_content( $menu ) {
+        switch ( $menu ) {
+            case 'home':
+                require_once __DIR__ . '/templates/menu/home.php';
+                break;
+        }
+    }
 }
