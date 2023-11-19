@@ -1,16 +1,16 @@
 <?php
 /**
- * WordPress to Storipress Exporter
+ * Storipress
  *
  * @package           Storipress
  * @author            Storipress
- * @copyright         2021 Albion Media Pty. Ltd.
+ * @copyright         Albion Media Pty. Ltd.
  * @license           GPL-3.0-or-later
  *
  * @wordpress-plugin
  * Plugin Name:       Storipress
  * Plugin URI:        https://github.com/storipress/wp-storipress-exporter
- * Description:       Export your WordPress data to Storipress by one-click.
+ * Description:       Experience the full power of Storipress on WordPress.
  * Version:           0.0.11
  * Requires at least: 5.0
  * Requires PHP:      7.2

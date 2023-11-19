@@ -12,7 +12,7 @@ namespace Storipress\Storipress\Errors;
 /**
  * Invalid request payload exception.
  *
- * @since 0.0.1
+ * @since 0.0.12
  */
 final class Invalid_Payload_Exception extends Exception {
 	/**

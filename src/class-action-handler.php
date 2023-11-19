@@ -14,7 +14,7 @@ use Storipress\Storipress\Actions\Action;
 /**
  * Action handler.
  *
- * @since 0.0.1
+ * @since 0.0.12
  */
 final class Action_Handler {
 	/**
@@ -22,7 +22,7 @@ final class Action_Handler {
 	 *
 	 * @var array<string, Action>
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public $actions;
 
@@ -43,7 +43,7 @@ final class Action_Handler {
 	 *
 	 * @return void
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public function register_actions() {
 		foreach ( $this->actions as $action ) {
@@ -58,7 +58,7 @@ final class Action_Handler {
 	 *
 	 * @return void
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public function unregister( string $key ) {
 		if ( ! isset( $this->actions[ $key ] ) ) {

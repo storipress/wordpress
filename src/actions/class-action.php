@@ -12,7 +12,7 @@ namespace Storipress\Storipress\Actions;
 /**
  * The abstract action class.
  *
- * @since 0.0.1
+ * @since 0.0.12
  */
 abstract class Action {
 	/**
@@ -20,7 +20,7 @@ abstract class Action {
 	 *
 	 * @return void
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public function register() { }
 
@@ -29,7 +29,7 @@ abstract class Action {
 	 *
 	 * @return void
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public function unregister() { }
 
@@ -40,7 +40,7 @@ abstract class Action {
 	 *     success: bool,
 	 * }
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public function response_data(): array {
 		return array(

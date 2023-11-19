@@ -14,7 +14,7 @@ use Exception as BaseException;
 /**
  * Storipress exception.
  *
- * @since 0.0.1
+ * @since 0.0.12
  */
 abstract class Exception extends BaseException {
 }

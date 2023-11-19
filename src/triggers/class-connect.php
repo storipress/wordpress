@@ -15,7 +15,7 @@ use Storipress\Storipress\Errors\Internal_Error_Exception;
 /**
  * The connect trigger.
  *
- * @since 0.0.1
+ * @since 0.0.12
  */
 final class Connect extends Trigger {
 	/**
@@ -23,7 +23,7 @@ final class Connect extends Trigger {
 	 *
 	 * @var string
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public $client;
 

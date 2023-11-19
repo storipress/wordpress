@@ -12,7 +12,7 @@ namespace Storipress\Storipress\Errors;
 /**
  * Runtime internal error exception.
  *
- * @since 0.0.1
+ * @since 0.0.12
  */
 final class Internal_Error_Exception extends Exception {
 	/**

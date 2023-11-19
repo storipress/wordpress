@@ -2,24 +2,54 @@ name: Testing
 
 on:
   push:
-    branches:
-      - 'main'
-    tags-ignore:
-      - '**'
-    paths:
-      - '**.php'
-      - 'composer.*'
-      - '.github/workflows/testing.yml'
   pull_request:
-    paths:
-      - '**.php'
-      - 'composer.*'
-      - '.github/workflows/testing.yml'
   schedule:
     # run tests on every week Monday
     - cron: '0 0 * * 1'
 
 jobs:
+  static_analyze:
+    name: Static Analyze
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP with PECL extension
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          coverage: xdebug
+
+      - name: Get composer cache directory
+        run: echo "COMPOSER_DIR=$(composer config cache-files-dir)" >> $GITHUB_ENV
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.COMPOSER_DIR }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-static-analyze-
+
+      - name: Install dependencies
+        run: composer install --no-progress --no-interaction
+
+      - name: Check runtime dependencies
+        run: composer check-platform-reqs
+
+      - name: Run composer validate
+        run: composer validate --strict
+
+      - name: Run composer normalize
+        run: composer normalize --dry-run
+
+      - name: Run coding style checker
+        run: vendor/bin/phpcs -v --standard=WordPress --no-cache --extensions=php --parallel=4 --ignore="vendor|tests"  .
+
+      - name: Run static analysis
+        run: vendor/bin/phpstan --memory-limit=-1 --verbose
+
   testing:
     name: WordPress ${{ matrix.wordpress }}, PHP ${{ matrix.php }}
 
@@ -30,7 +60,7 @@ jobs:
 
       # https://make.wordpress.org/core/handbook/references/php-compatibility-and-wordpress-versions/
       matrix:
-        wordpress: [ '6.2', '6.1', '6.0', '5.9', '5.8', '5.7', '5.6', '5.5', '5.4', '5.3', '5.2', '5.1', '5.0' ]
+        wordpress: [ '6.4', '6.3', '6.2', '6.1', '6.0', '5.9', '5.8', '5.7', '5.6', '5.5', '5.4', '5.3', '5.2', '5.1', '5.0' ]
         php: [ '8.2', '8.1', '8.0', '7.4', '7.3', '7.2' ]
         exclude:
           - { php: '7.4', wordpress: '5.0' }
@@ -68,14 +98,14 @@ jobs:
 
     services:
       mysql:
-        image: mariadb:10.9.2
+        image: mariadb:11.1
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
         ports:
           - 3306:3306
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup PHP with PECL extension
         uses: shivammathur/setup-php@v2
@@ -90,8 +120,8 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.COMPOSER_DIR }}
-          key: ${{ runner.os }}-composer-${{ matrix.php }}-${{ matrix.wordpress }}-${{ matrix.phpunit }}-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
+          key: ${{ runner.os }}-composer-testing-${{ matrix.php }}-${{ matrix.wordpress }}-${{ matrix.phpunit }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-testing-
 
       - name: Set PHPUnit for WordPress 5.0
         if: ${{ matrix.wordpress <= '5.0' }}
@@ -101,34 +131,19 @@ jobs:
         if: ${{ matrix.wordpress >= '5.1' && matrix.wordpress <= '5.8' }}
         run: composer require phpunit/phpunit:~7.5 --dev --no-update
 
-      - name: Set PHPUnit for WordPress 5.9 ~ 6.1
+      - name: Set PHPUnit for WordPress 5.9 ~ 6.4
         if: ${{ matrix.wordpress >= '5.9' && matrix.php <= '7.2' }}
         run: composer require phpunit/phpunit:~8.5 --dev --no-update
 
-      - name: Set PHPUnit for WordPress 5.9 ~ 6.1
+      - name: Set PHPUnit for WordPress 5.9 ~ 6.4
         if: ${{ matrix.wordpress >= '5.9' && matrix.php >= '7.3' }}
         run: composer require phpunit/phpunit:~9.5 --dev --no-update
 
       - name: Install dependencies
         run: composer update --no-progress --no-interaction
 
-      - name: Check runtime dependencies
-        run: composer check-platform-reqs
-
-      - name: Run Composer Validate
-        run: composer validate --strict
-
-      - name: Run Composer Normalize
-        run: composer normalize --dry-run
-
-      - name: Run coding style checker
-        run: vendor/bin/phpcs -v -n --standard=WordPress -- *.php
-
-      - name: Run static analysis
-        run: vendor/bin/phpstan --memory-limit=-1 --verbose
-
       - name: Install WP Tests
         run: bash ./bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1 ${{ matrix.wordpress }}
 
       - name: phpunit tests
-        run: ./vendor/bin/phpunit
+        run: vendor/bin/phpunit

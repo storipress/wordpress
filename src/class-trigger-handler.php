@@ -22,7 +22,7 @@ use WP_REST_Server;
 /**
  * The trigger class.
  *
- * @since 0.0.1
+ * @since 0.0.12
  */
 final class Trigger_Handler {
 	/**
@@ -41,7 +41,7 @@ final class Trigger_Handler {
 	 *
 	 * @return void
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public function register_routes() {
 		$routes = array(
@@ -74,7 +74,7 @@ final class Trigger_Handler {
 	 * @param WP_REST_Request<array{}> $request The request instance.
 	 * @return void
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 *
 	 * @noinspection PhpMissingParamTypeInspection
 	 */
@@ -95,7 +95,7 @@ final class Trigger_Handler {
 	 *
 	 * @return void
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public function disconnect() {
 		$this->handle( new Disconnect() );
@@ -107,7 +107,7 @@ final class Trigger_Handler {
 	 * @param Trigger $trigger The trigger instance.
 	 * @return void
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public function handle( Trigger $trigger ) {
 		if ( ! $trigger->validate() ) {
@@ -136,7 +136,7 @@ final class Trigger_Handler {
 	 * @param Exception $exception Exception.
 	 * @return void
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public function error( Exception $exception ) {
 		$this->response(
@@ -155,7 +155,7 @@ final class Trigger_Handler {
 	 * @param int                  $status The response status.
 	 * @return void
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public function response( array $data, int $status = 200 ) {
 		status_header( $status );

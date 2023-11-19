@@ -17,7 +17,7 @@ use WP_Error;
 /**
  * The core class.
  *
- * @since 0.0.1
+ * @since 0.0.12
  */
 final class Core {
 
@@ -26,7 +26,7 @@ final class Core {
 	 *
 	 * @var string
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public $option_key = 'storipress';
 
@@ -38,7 +38,7 @@ final class Core {
 	 *     client?: string
 	 * }
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public $options;
 
@@ -62,7 +62,7 @@ final class Core {
 	 *
 	 * @throws Internal_Error_Exception Something went wrong.
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public function generate_auth(): string {
 		$user = wp_get_current_user();
@@ -109,7 +109,7 @@ final class Core {
 	 *
 	 * @param int $user_id User ID.
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public function delete_application_password( int $user_id ): bool {
 		$passwords = WP_Application_Passwords::get_user_application_passwords( $user_id );
@@ -134,7 +134,7 @@ final class Core {
 	 *
 	 * @param array{ hash_key?: string, client?: string } $value The option value.
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public function set_options( array $value ): bool {
 		$this->options = array_merge( $this->options, $value );
@@ -145,7 +145,7 @@ final class Core {
 	/**
 	 * Get the installed URL.
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public function get_install_url(): string {
 		return add_query_arg(
@@ -164,7 +164,7 @@ final class Core {
 	 *
 	 * @throws Internal_Error_Exception Runtime error.
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public function get_app_url(): string {
 		if ( ! isset( $this->options['client'] ) ) {
@@ -177,7 +177,7 @@ final class Core {
 	/**
 	 * Connected or not
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public function is_connected(): bool {
 		return isset( $this->options['client'] ) && ! empty( $this->options['client'] );
@@ -189,7 +189,7 @@ final class Core {
 	 * @param array<string, mixed> $payload The payload.
 	 * @return string|null
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	public function generate_signature( $payload ) {
 		if ( ! isset( $this->options['hash_key'] ) || empty( $this->options['hash_key'] ) ) {

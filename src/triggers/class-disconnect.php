@@ -15,7 +15,7 @@ use Storipress\Storipress\Errors\Internal_Error_Exception;
 /**
  * The disconnect trigger.
  *
- * @since 0.0.1
+ * @since 0.0.12
  */
 final class Disconnect extends Trigger {
 	/**

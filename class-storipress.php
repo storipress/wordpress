@@ -1,11 +1,8 @@
 <?php
 /**
- * Storipress Exporter
+ * Storipress
  *
- * @package           Storipress Exporter
- * @author            Storipress
- * @copyright         2021 Albion Media Pty. Ltd.
- * @license           GPL-3.0-or-later
+ * @package Storipress
  */
 
 use Storipress\Storipress\Action_Handler;
@@ -14,35 +11,32 @@ use Storipress\Storipress\Trigger_Handler;
 
 /**
  * Plugin class.
- *
- * @package Storipress Exporter
- * @author  Storipress
  */
 final class Storipress {
 	/**
 	 * Plugin version.
 	 *
-	 * @since 0.0.2
-	 *
 	 * @var string
+	 *
+	 * @since 0.0.2
 	 */
 	public $version = '0.0.11';
 
 	/**
 	 * Plugin build version.
 	 *
-	 * @since 0.0.10
-	 *
 	 * @var integer
+	 *
+	 * @since 0.0.10
 	 */
 	protected $build = 11;
 
 	/**
 	 * Instance of this class.
 	 *
-	 * @since 0.0.1
-	 *
 	 * @var Storipress|null
+	 *
+	 * @since 0.0.1
 	 */
 	protected static $instance = null;
 
@@ -50,6 +44,8 @@ final class Storipress {
 	 * Helper class.
 	 *
 	 * @var Core
+	 *
+	 * @since 0.0.12
 	 */
 	public $core;
 
@@ -57,6 +53,8 @@ final class Storipress {
 	 * Trigger class.
 	 *
 	 * @var Trigger_Handler
+	 *
+	 * @since 0.0.12
 	 */
 	public $trigger;
 
@@ -64,6 +62,8 @@ final class Storipress {
 	 * Action class.
 	 *
 	 * @var Action_Handler
+	 *
+	 * @since 0.0.12
 	 */
 	public $action;
 
@@ -78,6 +78,7 @@ final class Storipress {
 		$this->action = new Action_Handler();
 
 		add_action( 'admin_menu', array( &$this, 'register_menu' ) );
+
 		add_action( 'current_screen', array( &$this, 'callback' ) );
 	}
 
@@ -101,6 +102,8 @@ final class Storipress {
 	 * Listens for page callback, intercepts and runs export.
 	 *
 	 * @return void
+	 *
+	 * @since 0.0.1
 	 */
 	public function callback() {
 		$screen = get_current_screen();
@@ -133,6 +136,8 @@ final class Storipress {
 	 * Add menu option to Tools list.
 	 *
 	 * @return void
+	 *
+	 * @since 0.0.1
 	 */
 	public function register_menu() {
 		$nonce = wp_create_nonce( 'storipress' );
@@ -157,6 +162,8 @@ final class Storipress {
 	 * Export site content.
 	 *
 	 * @return void
+	 *
+	 * @since 0.0.1
 	 */
 	protected function export() {
 		if ( ob_get_level() > 0 ) {
@@ -188,6 +195,8 @@ final class Storipress {
 	 * Export site config.
 	 *
 	 * @return self
+	 *
+	 * @since 0.0.1
 	 */
 	protected function export_site_config(): Storipress {
 		$fields = array(
@@ -213,6 +222,8 @@ final class Storipress {
 	 * Export users.
 	 *
 	 * @return self
+	 *
+	 * @since 0.0.1
 	 */
 	protected function export_users(): Storipress {
 		$result = count_users();
@@ -255,6 +266,8 @@ final class Storipress {
 	 * Export categories.
 	 *
 	 * @return self
+	 *
+	 * @since 0.0.1
 	 */
 	protected function export_categories(): Storipress {
 		$parents = array( 0 );
@@ -305,6 +318,8 @@ final class Storipress {
 	 * Export tags.
 	 *
 	 * @return self
+	 *
+	 * @since 0.0.1
 	 */
 	protected function export_tags(): Storipress {
 		$tags = get_tags(
@@ -330,6 +345,8 @@ final class Storipress {
 	 * Export posts.
 	 *
 	 * @return self
+	 *
+	 * @since 0.0.1
 	 */
 	protected function export_posts(): Storipress {
 		foreach ( $this->get_post_ids() as $idx => $post_id ) {
@@ -361,6 +378,8 @@ final class Storipress {
 	 * Export plugins.
 	 *
 	 * @return self
+	 *
+	 * @since 0.0.11
 	 */
 	protected function export_plugins(): Storipress {
 		$plugins = get_plugins();
@@ -369,8 +388,8 @@ final class Storipress {
 			$plugin = array_merge(
 				$plugin,
 				array(
-					'IsActive' => is_plugin_active( $file ),
-					'IsPaused' => is_plugin_paused( $file ),
+					'IsActive'   => is_plugin_active( $file ),
+					'IsPaused'   => is_plugin_paused( $file ),
 					'IsInActive' => is_plugin_inactive( $file ),
 				)
 			);
@@ -387,6 +406,8 @@ final class Storipress {
 	 * Because there may be thousands of posts, call get_posts may run out of memory.
 	 *
 	 * @return Generator<int, int>
+	 *
+	 * @since 0.0.1
 	 */
 	protected function get_post_ids(): Generator {
 		global $wpdb;
@@ -428,6 +449,8 @@ final class Storipress {
 	 * @param WP_Post $post WP_Post object.
 	 *
 	 * @return mixed[]
+	 *
+	 * @since 0.0.1
 	 */
 	protected function get_post_data( WP_Post $post ): array {
 		$tags = get_the_tags( $post->ID );
@@ -460,6 +483,8 @@ final class Storipress {
 	 * @param WP_Post $post WP_Post object.
 	 *
 	 * @return mixed[]
+	 *
+	 * @since 0.0.1
 	 */
 	protected function get_post_taxonomies( WP_Post $post ): array {
 		$taxonomies = get_taxonomies(
@@ -502,6 +527,8 @@ final class Storipress {
 	 * @param bool    $prepend_newline Insert new line symbol before each line.
 	 *
 	 * @return void
+	 *
+	 * @since 0.0.1
 	 */
 	protected function flush( string $type, array $data, bool $prepend_newline = true ) {
 		$payload = array(
@@ -522,9 +549,9 @@ final class Storipress {
 	/**
 	 * Render the admin submenu page.
 	 *
-	 * @since 0.0.1
-	 *
 	 * @return void
+	 *
+	 * @since 0.0.12
 	 */
 	public function render_page() {
 		add_action( 'storiress/admin/menu/content', array( &$this, 'add_menu_content' ) );
@@ -537,6 +564,8 @@ final class Storipress {
 	 *
 	 * @param string $menu The current menu.
 	 * @return void
+	 *
+	 * @since 0.0.12
 	 */
 	public function add_menu_content( $menu ) {
 		switch ( $menu ) {

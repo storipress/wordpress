@@ -15,13 +15,13 @@ namespace Storipress\Storipress\Triggers;
 /**
  * The abstract trigger class.
  *
- * @since 0.0.1
+ * @since 0.0.12
  */
 abstract class Trigger {
 	/**
 	 * Validate the trigger request payload.
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	abstract public function validate(): bool;
 
@@ -30,7 +30,7 @@ abstract class Trigger {
 	 *
 	 * @return array<array-key, mixed>
 	 *
-	 * @since 0.0.1
+	 * @since 0.0.12
 	 */
 	abstract public function run(): array;
 }
