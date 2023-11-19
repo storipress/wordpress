@@ -8,7 +8,7 @@ License URI: https://github.com/storipress/wp-storipress-exporter/blob/main/LICE
 
 #STORIPRESS MIGRATOR - MIGRATE YOUR CONTENT TO STORIPRESS IN 1 CLICK
 
-The official Storipress plugin allows you connect Storipress to WordPress to manage your blog posts, as well as export your WordPress categories and content to Storipress. Currently, this plugin only supports Yoast and ACF for bi-directional sync of custom fields.
+The official Storipress plugin allows you connect Storipress to WordPress to manage your blog posts, as well as export your WordPress categories and content to Storipress. Currently, we're working to have this plugin support Yoast and ACF for bi-directional sync of custom fields. Want to accelerate the release of this feature? Open an issue or contribute directly in our git repo.
 
 == Description ==
 This plugin is currently in early beta. Help us make the plugin better by opening issues in our [Github Repo](https://github.com/storipress/wp-storipress-exporter/issues)!
