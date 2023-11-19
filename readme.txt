@@ -8,7 +8,7 @@ License URI: https://github.com/storipress/wp-storipress-exporter/blob/main/LICE
 
 #STORIPRESS MIGRATOR - MIGRATE YOUR CONTENT TO STORIPRESS IN 1 CLICK
 
-This official Storipress plugin allows you export your WordPress categories and content in a format that can be easily imported into Storipress.
+The official Storipress plugin allows you connect Storipress to WordPress to manage your blog posts, as well as export your WordPress categories and content to Storipress.
 
 == Description ==
 This plugin is currently in early beta. Help us make the plugin better by opening issues in our [Github Repo](https://github.com/storipress/wp-storipress-exporter/issues)!
