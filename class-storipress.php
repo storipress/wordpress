@@ -412,7 +412,7 @@ final class Storipress {
 	protected function get_post_ids(): Generator {
 		global $wpdb;
 
-		$result = $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} ORDER BY ID DESC LIMIT 0, 1" );
+		$result = $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} ORDER BY ID DESC LIMIT 0, 1" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		$max_id = (int) ( $result[0] ?? 0 );
 
@@ -429,7 +429,7 @@ final class Storipress {
 
 			$upper_bound = $i + $step;
 
-			$post_ids = $wpdb->get_col(
+			$post_ids = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
 				$wpdb->prepare(
 					"SELECT ID FROM {$wpdb->posts} WHERE ID >= %d AND ID < %d ORDER BY ID ASC",
 					$lower_bound,
@@ -554,7 +554,7 @@ final class Storipress {
 	 * @since 0.0.12
 	 */
 	public function render_page() {
-		add_action( 'storiress/admin/menu/content', array( &$this, 'add_menu_content' ) );
+		add_action( 'storiress_admin_menu_content', array( &$this, 'add_menu_content' ) );
 
 		require_once __DIR__ . '/templates/page.php';
 	}

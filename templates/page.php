@@ -1,9 +1,14 @@
 <?php
+/**
+ * Storipress
+ *
+ * @package Storipress
+ */
 
-$pluginName = 'Storipress';
+$plugin_name = 'Storipress';
 
 ob_start();
-	do_action( 'storiress/admin/menu/content', 'home' );
-$content = ob_get_clean();
 
-echo $content;
+do_action( 'storiress_admin_menu_content', 'home' );
+
+echo ob_get_clean(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

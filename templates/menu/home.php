@@ -1,4 +1,11 @@
 <?php
+/**
+ * Storipress
+ *
+ * @package Storipress
+ */
+
+declare(strict_types=1);
 
 $core = \Storipress::instance()->core;
 
@@ -7,8 +14,7 @@ try {
 		? $core->get_app_url()
 		: $core->get_install_url();
 
-    require __DIR__ . '/../dist/home.html';
+	require __DIR__ . '/../dist/home.html';
 } catch ( Exception $e ) {
-    echo sprintf('Something went wrong, error code: %d', $e->getCode());
+	printf( 'Something went wrong, error code: %d', esc_html( $e->getCode() ) );
 }
-
