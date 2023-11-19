@@ -2,6 +2,7 @@
 /.git
 /bin
 /tests
+/vendor
 /vue-templates
 .deepsource.toml
 .distignore
