@@ -123,6 +123,9 @@ jobs:
           key: ${{ runner.os }}-composer-testing-${{ matrix.php }}-${{ matrix.wordpress }}-${{ matrix.phpunit }}-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-testing-
 
+      - name: Remove linter packages to prevent platform issue
+        run: composer remove --dev --no-update dealerdirect/phpcodesniffer-composer-installer ergebnis/composer-normalize phpstan/phpstan szepeviktor/phpstan-wordpress wp-coding-standards/wpcs
+
       - name: Set PHPUnit for WordPress 5.0
         if: ${{ matrix.wordpress <= '5.0' }}
         run: composer require phpunit/phpunit:~6.5 --dev --no-update
