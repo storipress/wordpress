@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* rename box-shadow */
+  .layer-0 {
+    @apply border border-black/[.05] shadow-0-layer;
+  }
+  .layer-1 {
+    @apply border border-black/[.05] shadow-1-layer;
+  }
+  .layer-2 {
+    @apply border border-black/[.05] shadow-2-layer;
+  }
+
+  .text-display-medium {
+    font-size: 1.625rem;
+    font-weight: normal;
+    line-height: 2rem;
+    color: #27272a;
+  }
+
+  .text-button {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1rem;
+    color: #27272a;
+  }
+
+  .text-body {
+    font-size: 0.875rem;
+    font-weight: normal;
+    line-height: 1.25rem;
+    color: #27272a;
+  }
+}

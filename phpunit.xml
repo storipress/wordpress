@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<phpunit
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+  backupGlobals="false"
+  bootstrap="tests/bootstrap.php"
+  beStrictAboutChangesToGlobalState="true"
+  colors="true"
+  columns="max"
+  executionOrder="random"
+  convertErrorsToExceptions="true"
+  convertNoticesToExceptions="true"
+  convertWarningsToExceptions="true"
+>
+  <testsuites>
+    <testsuite name="default">
+      <directory suffix="Test.php">./tests/</directory>
+    </testsuite>
+  </testsuites>
+  <php>
+    <ini name="memory_limit" value="-1"/>
+    <ini name="error_reporting" value="-1"/>
+    <ini name="log_errors_max_len" value="0"/>
+    <ini name="xdebug.show_exception_trace" value="0"/>
+    <ini name="zend.assertions" value="1"/>
+    <ini name="assert.exception" value="1"/>
+  </php>
+</phpunit>

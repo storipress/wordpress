@@ -1,17 +1,17 @@
 <?php
 /**
- * WordPress to Storipress Exporter
+ * Storipress
  *
  * @package           Storipress
  * @author            Storipress
- * @copyright         2021 Albion Media Pty. Ltd.
+ * @copyright         Albion Media Pty. Ltd.
  * @license           GPL-3.0-or-later
  *
  * @wordpress-plugin
  * Plugin Name:       Storipress
  * Plugin URI:        https://github.com/storipress/wp-storipress-exporter
- * Description:       Export your WordPress data to Storipress by one-click.
- * Version:           0.0.11
+ * Description:       Experience the full power of Storipress on WordPress.
+ * Version:           0.0.12
  * Requires at least: 5.0
  * Requires PHP:      7.2
  * Author:            Storipress
@@ -30,6 +30,35 @@ if ( version_compare( PHP_VERSION, '7.2.0', '<' ) ) {
 	wp_die( 'Storipress Exporter requires PHP 7.2 or later.' );
 }
 
+spl_autoload_register(
+	function ( string $class_name ) {
+		if ( ! str_contains( $class_name, 'Storipress' ) ) {
+			return;
+		}
+
+		$path = str_replace(
+			array( 'storipress', '_', '\\' ),
+			array( '', '-', DIRECTORY_SEPARATOR ),
+			strtolower( $class_name )
+		);
+
+		$file = sprintf(
+			'%s/src/%s/class-%s.php',
+			__DIR__,
+			dirname( $path ),
+			basename( $path )
+		);
+
+		$realpath = realpath( $file );
+
+		if ( ! is_string( $realpath ) ) {
+			return;
+		}
+
+		require_once $realpath;
+	}
+);
+
 require_once __DIR__ . '/class-storipress.php';
 
-Storipress::get_instance();
+Storipress::instance();

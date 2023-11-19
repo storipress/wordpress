@@ -8,5 +8,6 @@ parameters:
         maximumNumberOfProcesses: 4
 
     paths:
+        - src
         - class-storipress.php
         - storipress.php

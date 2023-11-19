@@ -1,7 +1,15 @@
 /.github
 /.git
+/bin
+/tests
+/vendor
+/vue-templates
 .deepsource.toml
 .distignore
+.editorconfig
+.gitattributes
 .gitignore
 composer.json
 composer.lock
+phpstan.neon
+phpunit.xml
