@@ -60,7 +60,7 @@ jobs:
       # https://make.wordpress.org/core/handbook/references/php-compatibility-and-wordpress-versions/
       matrix:
         wordpress: [ '6.4', '6.3', '6.2', '6.1', '6.0', '5.9', '5.8', '5.7', '5.6', '5.5', '5.4', '5.3', '5.2', '5.1', '5.0' ]
-        php: [ '8.2', '8.1', '8.0', '7.4', '7.3', '7.2' ]
+        php: [ '8.3', '8.2', '8.1', '8.0', '7.4', '7.3', '7.2' ]
         exclude:
           - { php: '7.4', wordpress: '5.0' }
           - { php: '7.4', wordpress: '5.1' }
@@ -94,6 +94,20 @@ jobs:
           - { php: '8.2', wordpress: '5.8' }
           - { php: '8.2', wordpress: '5.9' }
           - { php: '8.2', wordpress: '6.0' }
+          - { php: '8.3', wordpress: '5.0' }
+          - { php: '8.3', wordpress: '5.1' }
+          - { php: '8.3', wordpress: '5.2' }
+          - { php: '8.3', wordpress: '5.3' }
+          - { php: '8.3', wordpress: '5.4' }
+          - { php: '8.3', wordpress: '5.5' }
+          - { php: '8.3', wordpress: '5.6' }
+          - { php: '8.3', wordpress: '5.7' }
+          - { php: '8.3', wordpress: '5.8' }
+          - { php: '8.3', wordpress: '5.9' }
+          - { php: '8.3', wordpress: '6.0' }
+          - { php: '8.3', wordpress: '6.1' }
+          - { php: '8.3', wordpress: '6.2' }
+          - { php: '8.3', wordpress: '6.3' }
 
     services:
       mysql:
@@ -119,7 +133,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.COMPOSER_DIR }}
-          key: ${{ runner.os }}-composer-testing-${{ matrix.php }}-${{ matrix.wordpress }}-${{ matrix.phpunit }}-${{ hashFiles('**/composer.lock') }}
+          key: ${{ runner.os }}-composer-testing-${{ matrix.php }}-${{ matrix.wordpress }}-${{ hashFiles('**/composer.json') }}
           restore-keys: ${{ runner.os }}-composer-testing-
 
       - name: Remove linter packages to prevent platform issue
