@@ -95,6 +95,7 @@ final class Core {
 				'site_name'   => get_bloginfo( 'name' ),
 				'url'         => get_bloginfo( 'url' ),
 				'rest_prefix' => rest_get_url_prefix(),
+                'permalink_structure' => get_option('permalink_structure'),
 			)
 		);
 
