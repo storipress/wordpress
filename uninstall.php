@@ -1,8 +1,13 @@
 <?php
+/**
+ * Storipress
+ *
+ * @package Storipress
+ */
 
-// if uninstall.php is not called by WordPress, die
+// If uninstall.php is not called by WordPress, die.
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-    die;
+	die;
 }
 
 require_once __DIR__ . '/autoload.php';
