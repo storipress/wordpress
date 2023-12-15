@@ -86,16 +86,16 @@ final class Core {
 
 		$data = wp_json_encode(
 			array(
-				'version'     => Storipress::instance()->version,
-				'token'       => $password[0],
-				'hash_key'    => $password[1]['password'],
-				'email'       => $user->user_email,
-				'username'    => $user->user_login,
-				'user_id'     => $user_id,
-				'site_name'   => get_bloginfo( 'name' ),
-				'url'         => get_bloginfo( 'url' ),
-				'rest_prefix' => rest_get_url_prefix(),
-                'permalink_structure' => get_option('permalink_structure'),
+				'version'             => Storipress::instance()->version,
+				'token'               => $password[0],
+				'hash_key'            => $password[1]['password'],
+				'email'               => $user->user_email,
+				'username'            => $user->user_login,
+				'user_id'             => $user_id,
+				'site_name'           => get_bloginfo( 'name' ),
+				'url'                 => get_bloginfo( 'url' ),
+				'rest_prefix'         => rest_get_url_prefix(),
+				'permalink_structure' => get_option( 'permalink_structure' ),
 			)
 		);
 
