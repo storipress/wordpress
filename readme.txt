@@ -32,6 +32,10 @@ Bug reports for the Storipress Migrator plugin are welcome over on our [GitHub R
 
 == Changelog ==
 
+= 0.0.13 =
+* Cleanup data when uninstalling the plugin
+* Improve REST API endpoint detection
+
 = 0.0.12 =
 * Support manage content through Storipress (beta)
 
