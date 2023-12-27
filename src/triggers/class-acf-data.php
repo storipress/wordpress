@@ -46,6 +46,27 @@ final class ACF_Data extends Trigger {
 
 		return array_map(
 			function ( $post ) {
+				/**
+				 * The post_content value.
+				 *
+				 * @var array{
+				 *  location?: array<array-key, array<array-key, object{
+				 *    param: string,
+				 *    operator: string,
+				 *    value: string,
+				 *  }>>,
+				 *  instructions?: string,
+				 *  placeholder?: string,
+				 *  field_type?: string,
+				 *  taxonomy?: string,
+				 *  type?: string,
+				 *  required?: int,
+				 *  choices?: array<string, string>,
+				 *  multiple?: int,
+				 *  min?: int|string,
+				 *  max?: int|string,
+				 * } $attributes
+				 */
                 // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
 				$attributes = unserialize( $post->post_content );
 
