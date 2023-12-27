@@ -60,7 +60,7 @@ final class ACF_Data extends Trigger {
 					// Field name.
 					'name'       => empty( $post->post_excerpt ) ? null : $post->post_excerpt,
 					// The detailed settings, including types, validation, etc.
-					'attributes'    => array(
+					'attributes' => array(
 						// Group location rules setting.
 						'location'    => $content['location'] ?? null,
 						// Instructions for authors. Shown when submitting data.
