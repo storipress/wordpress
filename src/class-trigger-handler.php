@@ -12,6 +12,7 @@ namespace Storipress\Storipress;
 use Storipress\Storipress\Errors\Exception;
 use Storipress\Storipress\Errors\Internal_Error_Exception;
 use Storipress\Storipress\Errors\Invalid_Payload_Exception;
+use Storipress\Storipress\Triggers\ACF_Data;
 use Storipress\Storipress\Triggers\Connect;
 use Storipress\Storipress\Triggers\Disconnect;
 use Storipress\Storipress\Triggers\Trigger;
@@ -52,6 +53,10 @@ final class Trigger_Handler {
 			array(
 				'path'     => '/disconnect',
 				'callback' => 'disconnect',
+			),
+			array(
+				'path'     => '/acf-data',
+				'callback' => 'acf_data',
 			),
 		);
 
@@ -99,6 +104,17 @@ final class Trigger_Handler {
 	 */
 	public function disconnect() {
 		$this->handle( new Disconnect() );
+	}
+
+	/**
+	 * Retrieve ACF fields
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.14
+	 */
+	public function acf_data() {
+		$this->handle( new ACF_Data() );
 	}
 
 	/**
