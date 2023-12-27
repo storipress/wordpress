@@ -47,7 +47,7 @@ final class ACF_Data extends Trigger {
 		return array_map(
 			function ( $post ) {
                 // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
-				$content = unserialize( $post->post_content );
+				$attributes = unserialize( $post->post_content );
 
 				return array(
 					'id'         => (string) $post->ID,
@@ -58,30 +58,30 @@ final class ACF_Data extends Trigger {
 					// Field label.
 					'label'      => $post->post_title,
 					// Field name.
-					'name'       => empty( $post->post_excerpt ) ? null : $post->post_excerpt,
+					'name'       => $post->post_excerpt,
 					// The detailed settings, including types, validation, etc.
 					'attributes' => array(
 						// Group location rules setting.
-						'location'    => $content['location'] ?? null,
+						'location'    => $attributes['location'] ?? null,
 						// Instructions for authors. Shown when submitting data.
-						'description' => $content['instructions'] ?? null,
+						'description' => $attributes['instructions'] ?? null,
 						// Appears within the input.
-						'placeholder' => $content['placeholder'] ?? null,
+						'placeholder' => $attributes['placeholder'] ?? null,
 						// The appearance of this field. (for taxonomy).
-						'field_type'  => $content['field_type'] ?? null,
+						'field_type'  => $attributes['field_type'] ?? null,
 						// The taxonomy to be displayed. (for taxonomy).
-						'taxonomy'    => $content['taxonomy'] ?? null,
+						'taxonomy'    => $attributes['taxonomy'] ?? null,
 						// The field type.
-						'type'        => $content['type'] ?? null,
-						'required'    => $content['required'] ?? null,
+						'type'        => $attributes['type'] ?? null,
+						'required'    => $attributes['required'] ?? null,
 						// Options for select and checkbox. (for select or checkbox).
-						'choices'     => $content['choices'] ?? null,
+						'choices'     => $attributes['choices'] ?? null,
 						// Allow content editors to select multiple values. (for select).
-						'multiple'    => $content['multiple'] ?? null,
+						'multiple'    => $attributes['multiple'] ?? null,
 						// Minimum number. (for number).
-						'min'         => $content['min'] ?? null,
+						'min'         => $attributes['min'] ?? null,
 						// Maximum number. (for number).
-						'max'         => $content['max'] ?? null,
+						'max'         => $attributes['max'] ?? null,
 					),
 					'created_at' => get_the_date( 'U', $post ),
 					'updated_at' => get_the_modified_date( 'U', $post ),
