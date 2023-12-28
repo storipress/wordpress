@@ -71,17 +71,19 @@ final class ACF_Data extends Trigger {
 				$attributes = unserialize( $post->post_content );
 
 				return array(
-					'id'         => (string) $post->ID,
+					'id'          => (string) $post->ID,
 					// Acf field group ID, which will be null if it's a field group.
-					'group_id'   => empty( $post->post_parent ) ? null : (string) $post->post_parent,
+					'group_id'    => empty( $post->post_parent ) ? null : (string) $post->post_parent,
 					// This is an ACF type, which will be either 'acf-field' or 'acf-field-group'.
-					'acf_type'   => $post->post_type,
+					'acf_type'    => $post->post_type,
 					// Field label.
-					'label'      => $post->post_title,
+					'label'       => $post->post_title,
 					// Field name.
-					'name'       => $post->post_excerpt,
+					'description' => $post->post_excerpt,
+					// Acf unique name.
+					'name'        => $post->post_name,
 					// The detailed settings, including types, validation, etc.
-					'attributes' => array(
+					'attributes'  => array(
 						// Group location rules setting.
 						'location'    => $attributes['location'] ?? null,
 						// Instructions for authors. Shown when submitting data.
@@ -104,8 +106,8 @@ final class ACF_Data extends Trigger {
 						// Maximum number. (for number).
 						'max'         => $attributes['max'] ?? null,
 					),
-					'created_at' => get_the_date( 'U', $post ),
-					'updated_at' => get_the_modified_date( 'U', $post ),
+					'created_at'  => get_the_date( 'U', $post ),
+					'updated_at'  => get_the_modified_date( 'U', $post ),
 				);
 			},
 			$posts
