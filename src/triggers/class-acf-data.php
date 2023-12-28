@@ -17,11 +17,38 @@ use Storipress;
  * @since 0.0.14
  */
 final class ACF_Data extends Trigger {
+
+	/**
+	 * Plugin file.
+	 *
+	 * @var string
+	 */
+	public $file = 'advanced-custom-fields/acf.php';
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public function validate(): bool {
-		return Storipress::instance()->core->is_connected();
+		if ( ! Storipress::instance()->core->is_connected() ) {
+			return false;
+		}
+
+		// Needs to include the plugin function on a non-admin page.
+		if ( ! function_exists( 'get_plugins' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
+		// Ensure acf is installed.
+		if ( ! in_array( $this->file, array_keys( get_plugins() ), true ) ) {
+			return false;
+		}
+
+		// Ensure acf is active.
+		if ( ! is_plugin_active( $this->file ) ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
