@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Storipress\Storipress\Triggers;
 
 use Storipress;
+use WP_Post;
 
 /**
  * The acf data trigger.
@@ -35,9 +36,15 @@ final class Update_Yoast_Seo_Metadata extends Trigger {
 	/**
 	 * The seo title.
 	 *
-	 * @var string|null
+	 * @var array{
+	 *    seo_title?: string,
+	 *    seo_description?: string,
+	 *    og_title?: string,
+	 *    og_description?: string,
+	 *    og_image_id?: int
+	 * }
 	 */
-	public $title;
+	public $options;
 
 	/**
 	 * The seo description.
@@ -49,16 +56,13 @@ final class Update_Yoast_Seo_Metadata extends Trigger {
 	/**
 	 * Constructor.
 	 *
-	 * @param int         $post_id The post id.
-	 * @param string|null $title The seo title.
-	 * @param string|null $description The seo description.
+	 * @param int                                                                                                                 $post_id The post id.
+	 * @param array{seo_title?: string, seo_description?: string, og_title?: string, og_description?: string, og_image_id?: int } $options The seo options.
 	 */
-	public function __construct( int $post_id, string $title = null, string $description = null ) {
-		$this->title = $title;
-
-		$this->description = $description;
-
+	public function __construct( int $post_id, array $options ) {
 		$this->post_id = $post_id;
+
+		$this->options = $options;
 	}
 
 	/**
@@ -90,15 +94,39 @@ final class Update_Yoast_Seo_Metadata extends Trigger {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @return array
+	 * @return array{}
 	 */
 	public function run(): array {
-		if ( ! empty( $this->title ) ) {
-			update_metadata( 'post', $this->post_id, '_yoast_wpseo_title', $this->title );
+		if ( isset( $this->options['seo_title'] ) ) {
+			update_metadata( 'post', $this->post_id, '_yoast_wpseo_title', $this->options['seo_title'] );
 		}
 
-		if ( ! empty( $this->description ) ) {
-			update_metadata( 'post', $this->post_id, '_yoast_wpseo_metadesc', $this->description );
+		if ( isset( $this->options['seo_description'] ) ) {
+			update_metadata( 'post', $this->post_id, '_yoast_wpseo_metadesc', $this->options['seo_description'] );
+		}
+
+		if ( isset( $this->options['og_title'] ) ) {
+			update_metadata( 'post', $this->post_id, '_yoast_wpseo_opengraph-title', $this->options['og_title'] );
+		}
+
+		if ( isset( $this->options['og_description'] ) ) {
+			update_metadata( 'post', $this->post_id, '_yoast_wpseo_opengraph-description', $this->options['og_description'] );
+		}
+
+		if ( isset( $this->options['og_image_id'] ) ) {
+			if ( -1 === $this->options['og_image_id'] ) {
+				delete_metadata( 'post', $this->post_id, '_yoast_wpseo_opengraph-image-id' );
+
+				delete_metadata( 'post', $this->post_id, '_yoast_wpseo_opengraph-image' );
+			} else {
+				$post = get_post( $this->options['og_image_id'] );
+
+				if ( $post instanceof WP_Post && 'attachment' === $post->post_type ) {
+					update_metadata( 'post', $this->post_id, '_yoast_wpseo_opengraph-image-id', $this->options['og_image_id'] );
+
+					update_metadata( 'post', $this->post_id, '_yoast_wpseo_opengraph-image', $post->guid );
+				}
+			}
 		}
 
 		return array();

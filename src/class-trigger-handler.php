@@ -135,23 +135,34 @@ final class Trigger_Handler {
 	public function update_yoast_seo_metadata( $request ) {
 		$id = $request->get_param( 'id' );
 
-		$title = $request->get_param( 'title' );
+		$options = $request->get_param( 'options' );
 
-		$description = $request->get_param( 'description' );
-
-		if ( ! is_int( $id ) || ( empty( $title ) && empty( $description ) ) ) {
+		// Post id is required and must be int.
+		if ( ! is_int( $id ) ) {
 			$this->error( new Invalid_Payload_Exception() );
 
 			return;
 		}
 
-		if ( ! ( get_post( $id ) instanceof WP_Post ) ) {
-			$this->error( new Post_Not_Found_Exception() );
+		if ( empty( $options ) || ! is_array( $options ) ) {
+			$this->error( new Invalid_Payload_Exception() );
 
 			return;
 		}
 
-		$this->handle( new Update_Yoast_Seo_Metadata( $id, $title, $description ) );
+        // Ensure the value is of the correct type.
+        if ( isset( $options['seo_title'] ) && ! is_string( $options['seo_title'] )
+			|| isset( $options['seo_description'] ) && ! is_string( $options['seo_description'] )
+			|| isset( $options['og_title'] ) && ! is_string( $options['og_title'] )
+			|| isset( $options['og_description'] ) && ! is_string( $options['og_description'] )
+			|| isset( $options['og_image_id'] ) && ! is_int( $options['og_image_id'] )
+		) {
+			$this->error( new Invalid_Payload_Exception() );
+
+			return;
+		}
+
+		$this->handle( new Update_Yoast_Seo_Metadata( $id, $options ) );
 	}
 
 	/**
