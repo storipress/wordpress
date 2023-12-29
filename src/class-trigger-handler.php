@@ -150,8 +150,8 @@ final class Trigger_Handler {
 			return;
 		}
 
-        // Ensure the value is of the correct type.
-        if ( isset( $options['seo_title'] ) && ! is_string( $options['seo_title'] )
+		// Ensure the value is of the correct type.
+		if ( isset( $options['seo_title'] ) && ! is_string( $options['seo_title'] )
 			|| isset( $options['seo_description'] ) && ! is_string( $options['seo_description'] )
 			|| isset( $options['og_title'] ) && ! is_string( $options['og_title'] )
 			|| isset( $options['og_description'] ) && ! is_string( $options['og_description'] )
