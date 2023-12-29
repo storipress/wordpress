@@ -122,7 +122,7 @@ final class Update_Yoast_Seo_Metadata extends Trigger {
 				$post = get_post( $this->options['og_image_id'] );
 
 				if ( $post instanceof WP_Post && 'attachment' === $post->post_type ) {
-					update_metadata( 'post', $this->post_id, '_yoast_wpseo_opengraph-image-id', $this->options['og_image_id'] );
+					update_metadata( 'post', $this->post_id, '_yoast_wpseo_opengraph-image-id', (string) $this->options['og_image_id'] );
 
 					update_metadata( 'post', $this->post_id, '_yoast_wpseo_opengraph-image', $post->guid );
 				}
