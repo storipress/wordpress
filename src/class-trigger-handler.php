@@ -12,11 +12,14 @@ namespace Storipress\Storipress;
 use Storipress\Storipress\Errors\Exception;
 use Storipress\Storipress\Errors\Internal_Error_Exception;
 use Storipress\Storipress\Errors\Invalid_Payload_Exception;
+use Storipress\Storipress\Errors\Post_Not_Found_Exception;
 use Storipress\Storipress\Triggers\ACF_Data;
 use Storipress\Storipress\Triggers\Connect;
 use Storipress\Storipress\Triggers\Disconnect;
 use Storipress\Storipress\Triggers\Trigger;
+use Storipress\Storipress\Triggers\Update_Yoast_Seo_Metadata;
 use Throwable;
+use WP_Post;
 use WP_REST_Request;
 use WP_REST_Server;
 
@@ -57,6 +60,10 @@ final class Trigger_Handler {
 			array(
 				'path'     => '/acf-data',
 				'callback' => 'acf_data',
+			),
+			array(
+				'path'     => '/update-yoast-seo-metadata',
+				'callback' => 'update_yoast_seo_metadata',
 			),
 		);
 
@@ -115,6 +122,47 @@ final class Trigger_Handler {
 	 */
 	public function acf_data() {
 		$this->handle( new ACF_Data() );
+	}
+
+	/**
+	 * Update Yoast seo metadata
+	 *
+	 * @param WP_REST_Request<array{}> $request The request instance.
+	 * @return void
+	 *
+	 * @since 0.0.14
+	 */
+	public function update_yoast_seo_metadata( $request ) {
+		$id = $request->get_param( 'id' );
+
+		$options = $request->get_param( 'options' );
+
+		// Post id is required and must be int.
+		if ( ! is_int( $id ) ) {
+			$this->error( new Invalid_Payload_Exception() );
+
+			return;
+		}
+
+		if ( empty( $options ) || ! is_array( $options ) ) {
+			$this->error( new Invalid_Payload_Exception() );
+
+			return;
+		}
+
+		// Ensure the value is of the correct type.
+		if ( isset( $options['seo_title'] ) && ! is_string( $options['seo_title'] )
+			|| isset( $options['seo_description'] ) && ! is_string( $options['seo_description'] )
+			|| isset( $options['og_title'] ) && ! is_string( $options['og_title'] )
+			|| isset( $options['og_description'] ) && ! is_string( $options['og_description'] )
+			|| isset( $options['og_image_id'] ) && ! is_int( $options['og_image_id'] )
+		) {
+			$this->error( new Invalid_Payload_Exception() );
+
+			return;
+		}
+
+		$this->handle( new Update_Yoast_Seo_Metadata( $id, $options ) );
 	}
 
 	/**
