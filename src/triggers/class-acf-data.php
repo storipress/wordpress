@@ -60,14 +60,28 @@ final class ACF_Data extends Trigger {
 		$posts = get_posts(
 			array(
 				'numberposts' => -1,
-				'post_type'   => array( 'acf-field-group', 'acf-field' ),
+				'post_type'   => array( 'acf-field' ),
 			)
 		);
 
 		$posts = array_filter(
 			$posts,
 			function ( $post ) {
-				return ! empty( $post->post_title ) && ! empty( $post->post_excerpt );
+				$length = strlen( $post->post_excerpt );
+
+				if ( $length < 3 || $length > 32 ) {
+					return false;
+				}
+
+				if ( empty( $post->post_title ) || empty( $post->post_excerpt ) ) {
+					return false;
+				}
+
+				if ( preg_match( '/^[a-z_][a-z0-9_]*$/', $post->post_excerpt ) === 0 ) {
+					return false;
+				}
+
+				return true;
 			}
 		);
 
@@ -105,10 +119,8 @@ final class ACF_Data extends Trigger {
 					'acf_type'    => $post->post_type,
 					// Field label.
 					'label'       => $post->post_title,
-					// Field name.
-					'description' => $post->post_excerpt,
-					// Acf unique name.
-					'name'        => $post->post_name,
+					// Acf field name.
+					'name'        => $post->post_excerpt,
 					// The detailed settings, including types, validation, etc.
 					'attributes'  => array(
 						// Group location rules setting.
