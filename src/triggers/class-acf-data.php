@@ -67,17 +67,11 @@ final class ACF_Data extends Trigger {
 		$posts = array_filter(
 			$posts,
 			function ( $post ) {
-				$length = strlen( $post->post_excerpt );
-
-				if ( $length < 3 || $length > 32 ) {
-					return false;
-				}
-
 				if ( empty( $post->post_title ) || empty( $post->post_excerpt ) ) {
 					return false;
 				}
 
-				if ( preg_match( '/^[a-z_][a-z0-9_]*$/', $post->post_excerpt ) === 0 ) {
+				if ( preg_match( '/^[a-z_][a-z0-9_]{2,31}$/', $post->post_excerpt ) === 0 ) {
 					return false;
 				}
 
