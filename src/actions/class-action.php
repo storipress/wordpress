@@ -46,7 +46,7 @@ abstract class Action {
 	/**
 	 * Send events request.
 	 *
-	 * @param array $args The request arguments.
+	 * @param array<mixed> $args The request arguments.
 	 * @return void
 	 *
 	 * @since 0.0.14
@@ -74,6 +74,12 @@ abstract class Action {
 			? 'https://storipress.dev'
 			: 'https://stori.press';
 
+		$body = wp_json_encode( $args );
+
+		if ( false === $body ) {
+			return;
+		}
+
 		wp_remote_post(
 			sprintf( '%s/partners/wordpress/events', $domain ),
 			array(
@@ -82,7 +88,7 @@ abstract class Action {
 					'Storipress-Signature' => $signature,
 					'Storipress-Timestamp' => time(),
 				),
-				'body'    => wp_json_encode( $args ),
+				'body'    => $body,
 			)
 		);
 	}

@@ -41,35 +41,35 @@ final class Action_Handler {
 	 * Constructor.
 	 */
 	public function __construct() {
-		/**
-		 * Register list.
-		 */
-		$this->actions = array(
-			new Category_Created(),
-			new Category_Edited(),
-			new Category_Deleted(),
-			new Tag_Created(),
-			new Tag_Edited(),
-			new Tag_Deleted(),
-			new User_Created(),
-			new User_Edited(),
-			new User_Deleted(),
-			new Post_Saved(),
-			new Post_Deleted(),
+		$this->register_actions(
+			array(
+				new Category_Created(),
+				new Category_Edited(),
+				new Category_Deleted(),
+				new Tag_Created(),
+				new Tag_Edited(),
+				new Tag_Deleted(),
+				new User_Created(),
+				new User_Edited(),
+				new User_Deleted(),
+				new Post_Saved(),
+				new Post_Deleted(),
+			)
 		);
-
-		$this->register_actions();
 	}
 
 	/**
 	 * Register the default hooks.
 	 *
+	 * @param Action[] $actions The action list.
 	 * @return void
 	 *
 	 * @since 0.0.12
 	 */
-	public function register_actions() {
-		foreach ( $this->actions as $action ) {
+	public function register_actions( array $actions ) {
+		foreach ( $actions as $action ) {
+			$this->actions[ $action->topic ] = $action;
+
 			$action->register();
 		}
 	}
