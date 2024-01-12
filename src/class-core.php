@@ -35,7 +35,8 @@ final class Core {
 	 *
 	 * @var array{
 	 *     hash_key?: string,
-	 *     client?: string
+	 *     client?: string,
+	 *     dev?: bool,
 	 * }
 	 *
 	 * @since 0.0.12
@@ -183,31 +184,5 @@ final class Core {
 	 */
 	public function is_connected(): bool {
 		return isset( $this->options['client'] ) && ! empty( $this->options['client'] );
-	}
-
-	/**
-	 * Generate the signature.
-	 *
-	 * @param array<string, mixed> $payload The payload.
-	 * @return string|null
-	 *
-	 * @since 0.0.12
-	 */
-	public function generate_signature( $payload ) {
-		if ( ! isset( $this->options['hash_key'] ) || empty( $this->options['hash_key'] ) ) {
-			return null;
-		}
-
-		$key = $this->options['hash_key'];
-
-		ksort( $payload );
-
-		$data = wp_json_encode( $payload );
-
-		if ( ! $data ) {
-			return null;
-		}
-
-		return hash_hmac( 'sha256', $data, $key );
 	}
 }

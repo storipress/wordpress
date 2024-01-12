@@ -10,6 +10,17 @@ declare(strict_types=1);
 namespace Storipress\Storipress;
 
 use Storipress\Storipress\Actions\Action;
+use Storipress\Storipress\Actions\Category_Created;
+use Storipress\Storipress\Actions\Category_Deleted;
+use Storipress\Storipress\Actions\Category_Edited;
+use Storipress\Storipress\Actions\Post_Deleted;
+use Storipress\Storipress\Actions\Post_Saved;
+use Storipress\Storipress\Actions\Tag_Created;
+use Storipress\Storipress\Actions\Tag_Deleted;
+use Storipress\Storipress\Actions\Tag_Edited;
+use Storipress\Storipress\Actions\User_Created;
+use Storipress\Storipress\Actions\User_Deleted;
+use Storipress\Storipress\Actions\User_Edited;
 
 /**
  * Action handler.
@@ -33,7 +44,19 @@ final class Action_Handler {
 		/**
 		 * Register list.
 		 */
-		$this->actions = array();
+		$this->actions = array(
+			new Category_Created(),
+			new Category_Edited(),
+			new Category_Deleted(),
+			new Tag_Created(),
+			new Tag_Edited(),
+			new Tag_Deleted(),
+			new User_Created(),
+			new User_Edited(),
+			new User_Deleted(),
+			new Post_Saved(),
+			new Post_Deleted(),
+		);
 
 		$this->register_actions();
 	}
