@@ -66,11 +66,9 @@ abstract class Action {
 
 		$args['client'] = $core->options['client'];
 
-		ksort( $args );
+		$signature = $this->sign( $args );
 
-		$signature = $this->generate_signature( $args );
-
-		$domain = ( $core->options['dev'] ?? false )
+		$domain = 'D' === substr( $args['client'], 0, 1 )
 			? 'https://storipress.dev'
 			: 'https://stori.press';
 
@@ -102,7 +100,7 @@ abstract class Action {
 	 *
 	 * @since 0.0.12
 	 */
-	public function generate_signature( $payload ) {
+	public function sign( $payload ) {
 		$options = Storipress::instance()->core->options;
 
 		if ( empty( $options['hash_key'] ) ) {

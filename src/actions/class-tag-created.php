@@ -27,21 +27,19 @@ class Tag_Created extends Action {
 	 * @link https://developer.wordpress.org/reference/hooks/create_taxonomy/
 	 */
 	public function register(): void {
-		add_action( 'create_post_tag', array( &$this, 'handle' ), 10, 2 );
+		add_action( 'create_post_tag', array( &$this, 'handle' ) );
 	}
 
 	/**
 	 * Hook action.
 	 *
 	 * @param int $term_id Term ID.
-	 * @param int $taxonomy_id Term taxonomy ID.
 	 * @return void
 	 */
-	public function handle( $term_id, $taxonomy_id ): void {
+	public function handle( $term_id ): void {
 		$this->send(
 			array(
-				'termId'     => $term_id,
-				'taxonomyId' => $taxonomy_id,
+				'term_id' => $term_id,
 			)
 		);
 	}

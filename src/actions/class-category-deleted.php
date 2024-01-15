@@ -27,21 +27,19 @@ class Category_Deleted extends Action {
 	 * @link https://developer.wordpress.org/reference/hooks/delete_taxonomy/
 	 */
 	public function register(): void {
-		add_action( 'delete_category', array( &$this, 'handle' ), 10, 2 );
+		add_action( 'delete_category', array( &$this, 'handle' ) );
 	}
 
 	/**
 	 * Hook action.
 	 *
 	 * @param int $term_id Term ID.
-	 * @param int $taxonomy_id Term taxonomy ID.
 	 * @return void
 	 */
-	public function handle( $term_id, $taxonomy_id ): void {
+	public function handle( $term_id ): void {
 		$this->send(
 			array(
-				'term_id'    => $term_id,
-				'taxonomyId' => $taxonomy_id,
+				'term_id' => $term_id,
 			)
 		);
 	}

@@ -36,7 +36,6 @@ final class Core {
 	 * @var array{
 	 *     hash_key?: string,
 	 *     client?: string,
-	 *     dev?: bool,
 	 * }
 	 *
 	 * @since 0.0.12
