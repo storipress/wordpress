@@ -22,6 +22,8 @@ abstract class Action {
 	 * Webhook topic.
 	 *
 	 * @var string
+	 *
+	 * @since 0.0.14
 	 */
 	public $topic;
 
@@ -44,7 +46,7 @@ abstract class Action {
 	public function unregister() { }
 
 	/**
-	 * Send events request.
+	 * Send events to Storipress.
 	 *
 	 * @param array<mixed> $args The request arguments.
 	 * @return void
@@ -68,9 +70,33 @@ abstract class Action {
 
 		$signature = $this->sign( $args );
 
-		$domain = 'D' === substr( $args['client'], 0, 1 )
-			? 'https://storipress.dev'
-			: 'https://stori.press';
+		if ( null === $signature ) {
+			return;
+		}
+
+		$domain = null;
+
+		switch ( substr( $args['client'], 0, 1 ) ) {
+			case 'D':
+				$domain = 'https://storipress.dev';
+				break;
+			case 'S':
+				$domain = 'https://storipress.pro';
+				break;
+			case 'P':
+				$domain = 'https://stori.press';
+				break;
+			case 'L':
+			case 'T':
+				$domain = 'http://localhost:8000';
+				break;
+			default:
+				break;
+		}
+
+		if ( null === $domain ) {
+			return;
+		}
 
 		$body = wp_json_encode( $args );
 
@@ -82,9 +108,9 @@ abstract class Action {
 			sprintf( '%s/partners/wordpress/events', $domain ),
 			array(
 				'headers' => array(
-					'Content-Type'         => 'application/json',
-					'Storipress-Signature' => $signature,
-					'Storipress-Timestamp' => time(),
+					'Content-Type'           => 'application/json',
+					'X-Storipress-Signature' => $signature,
+					'X-Storipress-Timestamp' => time(),
 				),
 				'body'    => $body,
 			)

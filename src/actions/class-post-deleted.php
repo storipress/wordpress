@@ -29,18 +29,20 @@ class Post_Deleted extends Action {
 	 * @link https://developer.wordpress.org/reference/hooks/deleted_post/
 	 */
 	public function register(): void {
-		add_action( 'deleted_post', array( &$this, 'handle' ), 10, 2 );
+		add_action( 'deleted_post', array( &$this, 'handle' ) );
 	}
 
 	/**
 	 * Hook action.
 	 *
-	 * @param int     $post_id Post ID.
-	 * @param WP_POST $post Post object.
+	 * @param int $post_id Post ID.
 	 * @return void
 	 */
-	public function handle( $post_id, $post ): void {
-		if ( 'post' !== $post->post_type ) {
+	public function handle( $post_id ): void {
+		// Compatible with versions below 5.4. There will only be one parameter: post id.
+		$post = get_post( $post_id );
+
+		if ( ! ( $post instanceof WP_POST ) || 'post' !== $post->post_type ) {
 			return;
 		}
 
