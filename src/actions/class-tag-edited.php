@@ -19,7 +19,7 @@ class Tag_Edited extends Action {
 	 *
 	 * @var string
 	 */
-	public $topic = 'tag_updated';
+	public $topic = 'tag_edited';
 
 	/**
 	 * The official document link.
