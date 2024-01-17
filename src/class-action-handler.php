@@ -10,6 +10,17 @@ declare(strict_types=1);
 namespace Storipress\Storipress;
 
 use Storipress\Storipress\Actions\Action;
+use Storipress\Storipress\Actions\Category_Created;
+use Storipress\Storipress\Actions\Category_Deleted;
+use Storipress\Storipress\Actions\Category_Edited;
+use Storipress\Storipress\Actions\Post_Deleted;
+use Storipress\Storipress\Actions\Post_Saved;
+use Storipress\Storipress\Actions\Tag_Created;
+use Storipress\Storipress\Actions\Tag_Deleted;
+use Storipress\Storipress\Actions\Tag_Edited;
+use Storipress\Storipress\Actions\User_Created;
+use Storipress\Storipress\Actions\User_Deleted;
+use Storipress\Storipress\Actions\User_Edited;
 
 /**
  * Action handler.
@@ -30,23 +41,35 @@ final class Action_Handler {
 	 * Constructor.
 	 */
 	public function __construct() {
-		/**
-		 * Register list.
-		 */
-		$this->actions = array();
-
-		$this->register_actions();
+		$this->register_actions(
+			array(
+				new Category_Created(),
+				new Category_Edited(),
+				new Category_Deleted(),
+				new Tag_Created(),
+				new Tag_Edited(),
+				new Tag_Deleted(),
+				new User_Created(),
+				new User_Edited(),
+				new User_Deleted(),
+				new Post_Saved(),
+				new Post_Deleted(),
+			)
+		);
 	}
 
 	/**
 	 * Register the default hooks.
 	 *
+	 * @param Action[] $actions The action list.
 	 * @return void
 	 *
 	 * @since 0.0.12
 	 */
-	public function register_actions() {
-		foreach ( $this->actions as $action ) {
+	public function register_actions( array $actions ) {
+		foreach ( $actions as $action ) {
+			$this->actions[ $action->topic ] = $action;
+
 			$action->register();
 		}
 	}
