@@ -22,7 +22,7 @@ class Plugin_Upgrade extends Action {
 	 *
 	 * @var string
 	 */
-	public $topic = 'plugin-upgrade';
+	public $topic = 'plugin-upgraded';
 
 	/**
 	 * The official document link.
