@@ -87,7 +87,6 @@ final class Core {
 		$data = wp_json_encode(
 			array_merge(
 				array(
-					'version'  => Storipress::instance()->version,
 					'token'    => $password[0],
 					'hash_key' => $password[1]['password'],
 					'email'    => $user->user_email,
@@ -188,6 +187,7 @@ final class Core {
 	 * The site data.
 	 *
 	 * @return array{
+	 *     version: string,
 	 *     site_name: string,
 	 *     url: string,
 	 *     rest_prefix: string,
@@ -198,6 +198,7 @@ final class Core {
 	 */
 	public function get_site_data(): array {
 		return array(
+			'version'             => Storipress::instance()->version,
 			'site_name'           => get_bloginfo( 'name' ),
 			'url'                 => get_bloginfo( 'url' ),
 			// 0.0.12

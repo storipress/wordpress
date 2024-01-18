@@ -15,7 +15,7 @@ use WP_Upgrader;
  *
  * @since 0.0.14
  */
-class Plugin_Upgrade extends Action {
+class Plugin_Upgraded extends Action {
 
 	/**
 	 * Webhook topic.
@@ -44,15 +44,8 @@ class Plugin_Upgrade extends Action {
 		if ( 'update' === $hook_extra['action'] && 'plugin' === $hook_extra['type'] ) {
 			foreach ( $hook_extra['plugins'] as $plugin_file ) {
 				if ( 'storipress/storipress.php' === $plugin_file ) {
-					$instance = Storipress::instance();
-
 					$this->send(
-						array_merge(
-							array(
-								'version' => $instance->version,
-							),
-							$instance->core->get_site_data()
-						)
+						Storipress::instance()->core->get_site_data()
 					);
 				}
 			}

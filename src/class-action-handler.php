@@ -13,7 +13,7 @@ use Storipress\Storipress\Actions\Action;
 use Storipress\Storipress\Actions\Category_Created;
 use Storipress\Storipress\Actions\Category_Deleted;
 use Storipress\Storipress\Actions\Category_Edited;
-use Storipress\Storipress\Actions\Plugin_Upgrade;
+use Storipress\Storipress\Actions\Plugin_Upgraded;
 use Storipress\Storipress\Actions\Post_Deleted;
 use Storipress\Storipress\Actions\Post_Saved;
 use Storipress\Storipress\Actions\Tag_Created;
@@ -55,7 +55,7 @@ final class Action_Handler {
 				new User_Deleted(),
 				new Post_Saved(),
 				new Post_Deleted(),
-				new Plugin_Upgrade(),
+				new Plugin_Upgraded(),
 			)
 		);
 	}
