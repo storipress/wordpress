@@ -85,17 +85,15 @@ final class Core {
 		$this->set_options( array( 'hash_key' => $password[1]['password'] ) );
 
 		$data = wp_json_encode(
-			array(
-				'version'             => Storipress::instance()->version,
-				'token'               => $password[0],
-				'hash_key'            => $password[1]['password'],
-				'email'               => $user->user_email,
-				'username'            => $user->user_login,
-				'user_id'             => $user_id,
-				'site_name'           => get_bloginfo( 'name' ),
-				'url'                 => get_bloginfo( 'url' ),
-				'rest_prefix'         => rest_get_url_prefix(),
-				'permalink_structure' => get_option( 'permalink_structure' ),
+			array_merge(
+				array(
+					'token'    => $password[0],
+					'hash_key' => $password[1]['password'],
+					'email'    => $user->user_email,
+					'username' => $user->user_login,
+					'user_id'  => $user_id,
+				),
+				$this->get_site_data()
 			)
 		);
 
@@ -183,5 +181,30 @@ final class Core {
 	 */
 	public function is_connected(): bool {
 		return isset( $this->options['client'] ) && ! empty( $this->options['client'] );
+	}
+
+	/**
+	 * The site data.
+	 *
+	 * @return array{
+	 *     version: string,
+	 *     site_name: string,
+	 *     url: string,
+	 *     rest_prefix: string,
+	 *     permalink_structure: mixed,
+	 * }
+	 *
+	 * @since 0.0.14
+	 */
+	public function get_site_data(): array {
+		return array(
+			'version'             => Storipress::instance()->version,
+			'site_name'           => get_bloginfo( 'name' ),
+			'url'                 => get_bloginfo( 'url' ),
+			// 0.0.12
+			'rest_prefix'         => rest_get_url_prefix(),
+			// 0.0.13
+			'permalink_structure' => get_option( 'permalink_structure' ),
+		);
 	}
 }
