@@ -39,7 +39,7 @@ final class Connect extends Trigger {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function validate(): bool {
+	public function is_activated(): bool {
 		// not allow to connect more than one client.
 		return ! Storipress::instance()->core->is_connected();
 	}

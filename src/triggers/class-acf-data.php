@@ -28,7 +28,7 @@ final class ACF_Data extends Trigger {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function validate(): bool {
+	public function is_activated(): bool {
 		if ( ! Storipress::instance()->core->is_connected() ) {
 			return false;
 		}

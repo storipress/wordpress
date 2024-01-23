@@ -19,11 +19,11 @@ namespace Storipress\Storipress\Triggers;
  */
 abstract class Trigger {
 	/**
-	 * Validate the trigger request payload.
+	 * The trigger is activated or not.
 	 *
 	 * @since 0.0.12
 	 */
-	abstract public function validate(): bool;
+	abstract public function is_activated(): bool;
 
 	/**
 	 * Run the trigger and return response data.
