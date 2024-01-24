@@ -78,13 +78,7 @@ final class Update_Yoast_Seo_Metadata extends Trigger {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 
-		// Ensure yoast seo is installed.
-		if ( ! in_array( $this->file, array_keys( get_plugins() ), true ) ) {
-			return false;
-		}
-
-		// Ensure yoast seo is active.
-		if ( ! is_plugin_active( $this->file ) ) {
+		if ( ! Storipress::instance()->core->is_plugin_activate( $this->file ) ) {
 			return false;
 		}
 
