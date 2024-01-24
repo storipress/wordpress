@@ -205,6 +205,36 @@ final class Core {
 			'rest_prefix'         => rest_get_url_prefix(),
 			// 0.0.13
 			'permalink_structure' => get_option( 'permalink_structure' ),
+			// 0.0.14
+			'yoast_seo_enable'    => $this->is_plugin_activate( 'wordpress-seo/wp-seo.php' ),
+			'acf_enable'          => $this->is_plugin_activate( 'advanced-custom-fields/acf.php' ),
 		);
+	}
+
+	/**
+	 * Ensure the plugin is installed and active.
+	 *
+	 * @param string $file Plugin file.
+	 * @return bool
+	 *
+	 * @since 0.0.14
+	 */
+	public function is_plugin_activate( $file ): bool {
+		// Needs to include the plugin function on a non-admin page.
+		if ( ! function_exists( 'get_plugins' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
+		// Ensure plugin is installed.
+		if ( ! in_array( $file, array_keys( get_plugins() ), true ) ) {
+			return false;
+		}
+
+		// Ensure plugin is active.
+		if ( ! is_plugin_active( $file ) ) {
+			return false;
+		}
+
+		return true;
 	}
 }
