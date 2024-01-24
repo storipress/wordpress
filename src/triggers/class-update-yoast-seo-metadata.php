@@ -68,7 +68,7 @@ final class Update_Yoast_Seo_Metadata extends Trigger {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function validate(): bool {
+	public function is_activated(): bool {
 		if ( ! Storipress::instance()->core->is_connected() ) {
 			return false;
 		}

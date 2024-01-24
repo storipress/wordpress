@@ -21,7 +21,7 @@ final class Disconnect extends Trigger {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function validate(): bool {
+	public function is_activated(): bool {
 		return true;
 	}
 

@@ -12,14 +12,13 @@ namespace Storipress\Storipress;
 use Storipress\Storipress\Errors\Exception;
 use Storipress\Storipress\Errors\Internal_Error_Exception;
 use Storipress\Storipress\Errors\Invalid_Payload_Exception;
-use Storipress\Storipress\Errors\Post_Not_Found_Exception;
+use Storipress\Storipress\Errors\Non_Activated_Trigger_Exception;
 use Storipress\Storipress\Triggers\ACF_Data;
 use Storipress\Storipress\Triggers\Connect;
 use Storipress\Storipress\Triggers\Disconnect;
 use Storipress\Storipress\Triggers\Trigger;
 use Storipress\Storipress\Triggers\Update_Yoast_Seo_Metadata;
 use Throwable;
-use WP_Post;
 use WP_REST_Request;
 use WP_REST_Server;
 
@@ -174,8 +173,8 @@ final class Trigger_Handler {
 	 * @since 0.0.12
 	 */
 	public function handle( Trigger $trigger ) {
-		if ( ! $trigger->validate() ) {
-			$this->error( new Invalid_Payload_Exception() );
+		if ( ! $trigger->is_activated() ) {
+			$this->error( new Non_Activated_Trigger_Exception() );
 
 			return;
 		}
