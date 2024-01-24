@@ -192,6 +192,10 @@ final class Core {
 	 *     url: string,
 	 *     rest_prefix: string,
 	 *     permalink_structure: mixed,
+	 *     activated_plugins: array{
+	 *          yoast_seo: bool,
+	 *          acf: bool,
+	 *     }
 	 * }
 	 *
 	 * @since 0.0.14
@@ -206,8 +210,10 @@ final class Core {
 			// 0.0.13
 			'permalink_structure' => get_option( 'permalink_structure' ),
 			// 0.0.14
-			'yoast_seo_enable'    => $this->is_plugin_activate( 'wordpress-seo/wp-seo.php' ),
-			'acf_enable'          => $this->is_plugin_activate( 'advanced-custom-fields/acf.php' ),
+			'activated_plugins'   => array(
+				'yoast_seo' => $this->is_plugin_activate( 'wordpress-seo/wp-seo.php' ),
+				'acf'       => $this->is_plugin_activate( 'advanced-custom-fields/acf.php' ),
+			),
 		);
 	}
 
