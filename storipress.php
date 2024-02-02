@@ -11,7 +11,7 @@
  * Plugin Name:       Storipress
  * Plugin URI:        https://github.com/storipress/wp-storipress-exporter
  * Description:       Experience the full power of Storipress on WordPress.
- * Version:           0.0.14
+ * Version:           0.0.15
  * Requires at least: 5.0
  * Requires PHP:      7.2
  * Author:            Storipress
