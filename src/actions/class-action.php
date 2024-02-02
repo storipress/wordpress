@@ -78,13 +78,13 @@ abstract class Action {
 
 		switch ( substr( $args['client'], 0, 1 ) ) {
 			case 'D':
-				$domain = 'https://storipress.dev';
+				$domain = 'https://api.storipress.dev';
 				break;
 			case 'S':
-				$domain = 'https://storipress.pro';
+				$domain = 'https://api.storipress.pro';
 				break;
 			case 'P':
-				$domain = 'https://stori.press';
+				$domain = 'https://api.stori.press';
 				break;
 			case 'L':
 			case 'T':
