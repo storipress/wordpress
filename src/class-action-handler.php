@@ -46,7 +46,7 @@ final class Action_Handler {
 		if ( ! empty( $_SERVER['HTTP_USER_AGENT'] ) ) {
 			$user_agent = sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) );
 
-			if ( str_starts_with( $user_agent, 'Storipress' ) ) {
+			if ( stripos( $user_agent, 'Storipress' ) !== false ) {
 				return;
 			}
 		}
