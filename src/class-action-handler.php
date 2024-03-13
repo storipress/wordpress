@@ -42,6 +42,15 @@ final class Action_Handler {
 	 * Constructor.
 	 */
 	public function __construct() {
+		// Prevent webhook firing when calling REST Api.
+		if ( ! empty( $_SERVER['HTTP_USER_AGENT'] ) ) {
+			$user_agent = sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) );
+
+			if ( str_starts_with( $user_agent, 'Storipress' ) ) {
+				return;
+			}
+		}
+
 		$this->register_actions(
 			array(
 				new Category_Created(),
