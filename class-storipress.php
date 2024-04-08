@@ -80,6 +80,8 @@ final class Storipress {
 		add_action( 'admin_menu', array( &$this, 'register_menu' ) );
 
 		add_action( 'current_screen', array( &$this, 'callback' ) );
+
+		add_filter( 'wp_kses_allowed_html', array( &$this, 'register_allowed_html' ), 10, 2 );
 	}
 
 	/**
@@ -156,6 +158,31 @@ final class Storipress {
 			'connect_to_storipress',
 			array( &$this, 'render_page' )
 		);
+	}
+
+	/**
+	 * Register custom allowed html attributes.
+	 *
+	 * @param array<string, array<string, bool>> $allowed Allowed HTML tags.
+	 * @param array<mixed>|string                $context Context name.
+	 * @return array<string, array<string, bool>>
+	 *
+	 * @since 0.0.16
+	 */
+	public function register_allowed_html( $allowed, $context ) {
+		if ( is_array( $context ) ) {
+			return $allowed;
+		}
+
+		if ( 'post' === $context ) {
+			$tags = array( 'div', 'p', 'h2', 'h3', 'ul', 'ol' );
+
+			foreach ( $tags as $tag ) {
+				$allowed[ $tag ]['data-sp-article'] = true;
+			}
+		}
+
+		return $allowed;
 	}
 
 	/**
