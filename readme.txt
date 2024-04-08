@@ -32,6 +32,9 @@ Bug reports for the Storipress Migrator plugin are welcome over on our [GitHub R
 
 == Changelog ==
 
+= 0.0.16 =
+* Add allowed HTML attributes
+
 = 0.0.15 =
 * Fix incorrect API domain
 
