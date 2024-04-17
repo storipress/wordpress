@@ -79,6 +79,8 @@ final class Storipress {
 
 		add_action( 'admin_menu', array( &$this, 'register_menu' ) );
 
+		add_action( 'rest_api_init', array( &$this, 'register_routes' ) );
+
 		add_action( 'current_screen', array( &$this, 'callback' ) );
 
 		add_filter( 'wp_kses_allowed_html', array( &$this, 'register_allowed_html' ), 10, 2 );
@@ -158,6 +160,27 @@ final class Storipress {
 			'connect_to_storipress',
 			array( &$this, 'render_page' )
 		);
+	}
+
+	/**
+	 * Register custom rest routes.
+	 *
+	 * @return void
+	 *
+	 * @since 0.0.18
+	 */
+	public function register_routes( ) {
+		foreach ( get_taxonomies( array( 'name' => 'post_tag' ), 'objects' ) as $taxonomy ) {
+			$taxonomy->show_in_rest = true;
+
+			$controller = $taxonomy->get_rest_controller();
+
+			if ( ! $controller ) {
+				continue;
+			}
+
+			$controller->register_routes();
+		}
 	}
 
 	/**
