@@ -13,18 +13,20 @@ use Storipress;
 use WP_Post;
 
 /**
- * The acf data trigger.
+ * The yoast seo data trigger.
  *
  * @since 0.0.14
  */
 final class Update_Yoast_Seo_Metadata extends Trigger {
 
 	/**
-	 * Plugin file.
+	 * Plugin files.
 	 *
-	 * @var string
+	 * @var array<int, string>
 	 */
-	public $file = 'wordpress-seo/wp-seo.php';
+	public $files = array(
+		'wordpress-seo/wp-seo.php',
+	);
 
 	/**
 	 * The post id.
@@ -78,11 +80,13 @@ final class Update_Yoast_Seo_Metadata extends Trigger {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 
-		if ( ! Storipress::instance()->core->is_plugin_activate( $this->file ) ) {
-			return false;
+		foreach ( $this->files as $path ) {
+			if ( Storipress::instance()->core->is_plugin_activate( $path ) ) {
+				return true;
+			}
 		}
 
-		return true;
+		return false;
 	}
 
 	/**

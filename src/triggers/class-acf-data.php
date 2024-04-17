@@ -19,11 +19,14 @@ use Storipress;
 final class ACF_Data extends Trigger {
 
 	/**
-	 * Plugin file.
+	 * Plugin files.
 	 *
-	 * @var string
+	 * @var array<int, string>
 	 */
-	public $file = 'advanced-custom-fields/acf.php';
+	public $files = array(
+		'advanced-custom-fields/acf.php',
+		'advanced-custom-fields-pro/acf.php',
+	);
 
 	/**
 	 * {@inheritDoc}
@@ -38,11 +41,13 @@ final class ACF_Data extends Trigger {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 
-		if ( ! Storipress::instance()->core->is_plugin_activate( $this->file ) ) {
-			return false;
+		foreach ( $this->files as $path ) {
+			if ( Storipress::instance()->core->is_plugin_activate( $path ) ) {
+				return true;
+			}
 		}
 
-		return true;
+		return false;
 	}
 
 	/**

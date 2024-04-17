@@ -193,8 +193,11 @@ final class Core {
 	 *     rest_prefix: string,
 	 *     permalink_structure: mixed,
 	 *     activated_plugins: array{
-	 *          yoast_seo: bool,
 	 *          acf: bool,
+	 *          acf_pro: bool,
+	 *          yoast_seo: bool,
+	 *          rank_math: bool,
+	 *          rank_math_pro: bool,
 	 *     }
 	 * }
 	 *
@@ -211,8 +214,11 @@ final class Core {
 			'permalink_structure' => get_option( 'permalink_structure' ),
 			// 0.0.14
 			'activated_plugins'   => array(
-				'yoast_seo' => $this->is_plugin_activate( 'wordpress-seo/wp-seo.php' ),
-				'acf'       => $this->is_plugin_activate( 'advanced-custom-fields/acf.php' ),
+				'acf'           => $this->is_plugin_activate( 'advanced-custom-fields/acf.php' ),
+				'acf_pro'       => $this->is_plugin_activate( 'advanced-custom-fields-pro/acf.php' ),
+				'yoast_seo'     => $this->is_plugin_activate( 'wordpress-seo/wp-seo.php' ),
+				'rank_math'     => $this->is_plugin_activate( 'seo-by-rank-math/rank-math.php' ),
+				'rank_math_pro' => $this->is_plugin_activate( 'seo-by-rank-math-pro/rank-math-pro.php' ),
 			),
 		);
 	}
