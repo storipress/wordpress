@@ -142,7 +142,7 @@ final class ACF_Data extends Trigger {
 					'updated_at' => get_the_modified_date( 'U', $post ),
 				);
 			},
-			array_values($posts)
+			array_values( $posts )
 		);
 	}
 }

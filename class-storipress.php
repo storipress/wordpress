@@ -169,7 +169,7 @@ final class Storipress {
 	 *
 	 * @since 0.0.18
 	 */
-	public function register_routes( ) {
+	public function register_routes() {
 		foreach ( get_taxonomies( array( 'name' => 'post_tag' ), 'objects' ) as $taxonomy ) {
 			$taxonomy->show_in_rest = true;
 
