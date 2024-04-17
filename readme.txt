@@ -32,6 +32,10 @@ Bug reports for the Storipress Migrator plugin are welcome over on our [GitHub R
 
 == Changelog ==
 
+= 0.0.17 =
+* Detect ACF PRO
+* Detect Rank Math SEO and Rank Math SEO PRO
+
 = 0.0.16 =
 * Add allowed HTML attributes
 
