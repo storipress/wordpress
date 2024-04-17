@@ -1,7 +1,7 @@
 === Storipress ===
 Tags: blogging, export, storipress, migrate, publishing
 Requires at least: 5.0
-Tested up to: 6.4
+Tested up to: 6.5
 Requires PHP: 7.2
 License: GPL-3.0
 License URI: https://github.com/storipress/wp-storipress-exporter/blob/main/LICENSE
