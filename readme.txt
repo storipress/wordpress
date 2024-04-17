@@ -32,6 +32,9 @@ Bug reports for the Storipress Migrator plugin are welcome over on our [GitHub R
 
 == Changelog ==
 
+= 0.0.18 =
+* Ensure tag can be fetched by REST API
+
 = 0.0.17 =
 * Detect ACF PRO
 * Detect Rank Math SEO and Rank Math SEO PRO
