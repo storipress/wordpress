@@ -150,11 +150,11 @@ final class Trigger_Handler {
 		}
 
 		// Ensure the value is of the correct type.
-		if ( isset( $options['seo_title'] ) && ! is_string( $options['seo_title'] )
-			|| isset( $options['seo_description'] ) && ! is_string( $options['seo_description'] )
-			|| isset( $options['og_title'] ) && ! is_string( $options['og_title'] )
-			|| isset( $options['og_description'] ) && ! is_string( $options['og_description'] )
-			|| isset( $options['og_image_id'] ) && ! is_int( $options['og_image_id'] )
+		if ( ( isset( $options['seo_title'] ) && ! is_string( $options['seo_title'] ) )
+			|| ( isset( $options['seo_description'] ) && ! is_string( $options['seo_description'] ) )
+			|| ( isset( $options['og_title'] ) && ! is_string( $options['og_title'] ) )
+			|| ( isset( $options['og_description'] ) && ! is_string( $options['og_description'] ) )
+			|| ( isset( $options['og_image_id'] ) && ! is_int( $options['og_image_id'] ) )
 		) {
 			$this->error( new Invalid_Payload_Exception() );
 
